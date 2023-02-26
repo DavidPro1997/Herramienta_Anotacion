@@ -2,11 +2,16 @@
 
 ## Despliegue de la Herramienta de forma local
 
+- Debe estar previamente instalado el microservicio 3.
+
+  - Para instalarlo ir a: https://github.com/DavidPro1997/microservice3.git 
+  
 - En una carpeta local clone el repositorio donde esta alojado el proyecto.
 
 ```bash
 git clone https://github.com/DavidPro1997/Herramienta_Anotacion.git
 ```
+
 ### Backend
 
 1. Instale Python3 (>=3.6 <=3.8.6)
@@ -33,7 +38,14 @@ FLASK_ENV=development
 py manage.py db migrate --message 'Algun mensaje'
 py manage.py db upgrade
 ```
-7. Corra el proyecto.
+7. Vaya al archivo `backend\app\main\service\politica_service.py` y edite las credenciales del servidor Linux Ubuntu 18 donde esta alojado el microservicio 3 con unas propias 
+```python
+#Credenciales del servidor Ubuntu
+servidor = "192.168.1.128"
+usuario = "david"
+clave = "4652"
+```
+8. Guarde todo y corra el proyecto.
 ```bash
 py manage.py run
 ```
