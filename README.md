@@ -1,67 +1,66 @@
-# Annotation tool
+# Herramienta de Anotacion
 
-## Backend
+## Despliegue de la Herramienta de forma local
 
-### Running the project locally
-
-1. Install Python3 (>=3.6 <=3.8.6)
-
-2. Go to the `backend` dir, create a virtual environment and activate it.
-You can follow this [guide](https://docs.python.org/3/library/venv.html)
-
-3. Install libraries by running:
+- En una carpeta local clone el repositorio donde esta alojado el proyecto.
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/felixminom/herramienta_anotacion.git
 ```
+### Backend
 
-4. You need to intall mysql locally. Project works with version 8.
-
-5. Update your string connection in `backend/app/main/config.py` accordingly.
-
-6. Run migrations as detailed in Migration section.
-
-7. To run the project execute this at root `/backend` level:
-
+1. Instale Python3 (>=3.6 <=3.8.6)
+2. Vaya a la carpeta `\Backend` cree un ambiente virtual y activelo.
 ```bash
-python manage.py run
+py -m pip install virtualenv
+py -m virtualenv de
+.\de\Scripts\activate
 ```
-
-### Making migrations
-1. Create a migration script from the detected changes in the model using the migrate command. This doesn’t affect the database yet.
-
+3. En el ambiente virtual (de) instale las librerias necesarias.
 ```bash
-python manage.py db migrate --message 'initial database migration'
+py -m pip install -r requirements.txt
 ```
-
-2. Apply the migration script to the database by using the upgrade command
-
-```bash
-python manage.py db upgrade
+4. En MySQL cree una base de datos con cualquier nombre. Ejemplo: `dbHerramienta`
+5. En el archivo .env de la ruta: `backend\.env` actualice el string de conexion.
+```javascript
+DB_CONN=mysql+pymysql://root@localhost/dbHerramienta
+SECRET_KEY=Secret-that-needs-to-be-updated
+APP_ENV=dev
+FLASK_ENV=development
 ```
-3. To undo the last migration run:
-
+6. Ejecute las migraciones.
 ```bash
-python manage.py db upgrade
+py manage.py db migrate --message 'Algun mensaje'
+py manage.py db upgrade
+```
+7. Corra el proyecto.
+```bash
+py manage.py run
 ```
 
 ## Frontend
 
-1. Install angular-cli following [this guide](https://angular.io/guide/setup-local)
-
-2. Go to `administracion` and run:
-
+1. Instale Angular.
+```bash
+npm install -g @angular/cli
+```
+2. Desde la carpeta `\administracion` ejecute:
 ```bash
 npm install
-```
-3. To start the website run:
-
-```bash
 ng serve
 ```
+3. Desde la carpeta `\visualizacion` ejecute:
+```bash
+npm install
+ng serve --port=4201
+```
+4. Abra un navegador con la ruta `http://localhost:4200/`, ingrese las credenciales y compruebe su funcionamiento.
+5. Abra un navegador con la ruta `http://localhost:4201/` y compruebe su funcionamiento.
 
-### Notes:
-1. do the same with the `visualizacion`
-
-2. If you want to run both projects at the same time you should specify a different
-port when running the third step, ie: `ng serve --port=4201`
+### Credenciales:
+- Administrador: 
+  - email: admin@gmail.com 
+  - clave: admin
+- Anotador:
+  - email: anotador@gmail.com
+  - clave: anotador
