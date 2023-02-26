@@ -5,7 +5,7 @@
 - En una carpeta local clone el repositorio donde esta alojado el proyecto.
 
 ```bash
-git clone https://github.com/felixminom/herramienta_anotacion.git
+git clone https://github.com/DavidPro1997/Herramienta_Anotacion.git
 ```
 ### Backend
 
