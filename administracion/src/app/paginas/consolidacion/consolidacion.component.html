@@ -1,10 +1,10 @@
 <mat-card class="mat-elevation-z8 card" style="background-color: #fafafa ;">
   <mat-grid-list cols="3" rowHeight="40px">
     <mat-grid-tile [colspan]="3" [rowspan]="1">
-      <mat-card-title style="width: 100%">Políticas de privacidad por consolidar</mat-card-title>
+      <mat-card-title style="width: 100%">{{ 'consolidar.titulo' | translate }}</mat-card-title>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="3" [rowspan]="1">
-      <mat-card-subtitle style="width: 100%"> Lista de políticas de privacidad asignadas para consolidar: </mat-card-subtitle>
+      <mat-card-subtitle style="width: 100%"> {{ 'consolidar.descripcion' | translate }} </mat-card-subtitle>
     </mat-grid-tile>
   </mat-grid-list>
 
@@ -21,7 +21,7 @@
         </ng-container>
   
         <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef> Politicas asignadas para codificar</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'consolidar.tabla.nombre' | translate }}</th>
           <td mat-cell *matCellDef="let politica">
             <span style="cursor: pointer;" matTooltip="Redirigir a politica"
               (click)="redirigirPolitica(politica)">{{politica.politica_nombre}}</span>
@@ -30,13 +30,13 @@
         </ng-container>
   
         <ng-container matColumnDef="progreso">
-          <th mat-header-cell *matHeaderCellDef> Progreso </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'consolidar.tabla.progreso' | translate }} </th>
           <td mat-cell *matCellDef="let politica">{{politica.progreso}}%</td>
         </ng-container>
   
         <ng-container matColumnDef="detalles">
           <th mat-header-cell *matHeaderCellDef>
-            Detalles
+            {{ 'consolidar.tabla.detalles' | translate }}
           </th>
           <td mat-cell *matCellDef="let politica">
             <button mat-raised-button (click)="detallesPolitica(politica)">
@@ -51,7 +51,7 @@
   </div>
 
   <ng-template #noElementos>
-    <h4>Por el momento no existen políticas de privacidad por consolidar</h4>
+    <h4> {{ 'consolidar.no_hay' | translate }}</h4>
   </ng-template>
 
   <mat-card-actions>

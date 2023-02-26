@@ -14,7 +14,7 @@ import { ChecklistDatabase } from '../paginas/anotacion/tree-view-tratamientos/t
     CommonModule,
     Material,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   providers:[
     ChecklistDatabase

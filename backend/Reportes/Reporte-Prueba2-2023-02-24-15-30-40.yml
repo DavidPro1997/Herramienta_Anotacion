@@ -1,0 +1,41 @@
+policy_2:
+  contains_synthetic: false
+  policy_id: 2
+  policy_name: Prueba2
+  policy_type: TEST
+  segments:
+    segments_1:
+      performed: true
+      segment_id: 8
+      segment_text: "Si retira su consentimiento para procesar su informaci\xF3n personal,\
+        \ podremos continuar procesando su informaci\xF3n personal en la medida requerida\
+        \ o permitida por la ley, en particular en relaci\xF3n con el ejercicio y\
+        \ la defensa de nuestros derechos legales o nuestras obligaciones legales\
+        \ y/ o regulatorias. "
+      sentences:
+        sentences_1:
+          practice_att: Atributo1
+          practice_type: Atributo1
+          practice_value: Valor1
+          sentence_text: "Si retira su consentimiento para procesar su informaci\xF3\
+            n personal, podremos continuar procesando su informaci\xF3n"
+    segments_2:
+      performed: true
+      segment_id: 10
+      segment_text: "Como el sitio web se actualiza peri\xF3dicamente, nuestros t\xE9\
+        rminos y condiciones pueden cambiar en cualquier momento. Por lo tanto, revise\
+        \ los t\xE9rminos y condiciones de privacidad publicados de tiempo en tiempo.\
+        \ En los casos que amerite, le notificaremos acerca de cambios sustanciales\
+        \ en la forma en que tratamos la informaci\xF3n personal mediante la publicaci\xF3\
+        n de un aviso en el sitio web o envi\xE1ndole un correo electr\xF3nico (si\
+        \ nos ha proporcionado su direcci\xF3n de correo electr\xF3nico y el permiso\
+        \ para utilizarlo). "
+      sentences:
+        sentences_1:
+          practice_att: Atributo2
+          practice_type: Atributo2
+          practice_value: Valor2
+          sentence_text: "omo el sitio web se actualiza peri\xF3dicamente, nuestros\
+            \ t\xE9rminos y condiciones pueden cambiar en cualquier momento. Por lo\
+            \ tanto, revise los t\xE9rminos y condiciones de privacidad publicados\
+            \ de tiempo en tiempo. En los casos que amerite, le notificaremos "

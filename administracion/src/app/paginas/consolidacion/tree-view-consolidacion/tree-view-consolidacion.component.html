@@ -1,12 +1,13 @@
 <section class="example-section">
-  <span style="color: forestgreen; padding-right: 10px;">Ejecuta</span> 
+  <span style="color: forestgreen; padding-right: 10px;">{{ 'consolidar.dialogo.ejecuta' | translate }}
+  </span> 
   <mat-slide-toggle
       id="slide"
       (change)="cambiarEjecuta()"
       class="example-margin"
       [color] = "color"
       [checked]="ejecutaAux">
-    <span style="color: tomato;"> No ejecuta </span>
+    <span style="color: tomato;"> {{ 'consolidar.dialogo.no_ejecuta' | translate }} </span>
   </mat-slide-toggle>
 </section>
 

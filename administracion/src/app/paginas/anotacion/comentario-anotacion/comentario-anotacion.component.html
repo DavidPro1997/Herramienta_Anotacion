@@ -2,7 +2,7 @@
     <mat-grid-list cols="10" rowHeight="30px" style="width: 100%;">
         <mat-grid-tile [colspan]="10" [rowspan]="1">
             <span style="font-weight: 500; color: white; font-size: 20px;">
-                Editar anotacion
+                {{ 'anotar.dialogo.editar' | translate }}
             </span>
         </mat-grid-tile>
     </mat-grid-list>
@@ -23,9 +23,9 @@
 
 
     <section class="example-section">
-        <span style="color: forestgreen;">Ejecuta </span>
+        <span style="color: forestgreen;">{{ 'anotar.dialogo.ejecuta' | translate }} </span>
         <mat-slide-toggle class="example-margin" (change)="cambiarEjecuta()" [checked]="!anotacion.ejecuta">
-            <span style="color: tomato;"> No ejecuta </span>
+            <span style="color: tomato;">{{ 'anotar.dialogo.no_ejecuta' | translate }} </span>
         </mat-slide-toggle>
     </section>
 
@@ -36,8 +36,8 @@
 
 
 <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Deja un comentario</mat-label>
-    <textarea matInput [(ngModel)]="anotacion.comentario" placeholder="Ej. Explica la manera en que se toman los datos">
+    <mat-label>{{ 'anotar.dialogo.comentario1' | translate }}</mat-label>
+    <textarea matInput [(ngModel)]="anotacion.comentario" placeholder="{{ 'anotar.dialogo.comentario2' | translate }}">
     </textarea>
 </mat-form-field>
 
@@ -49,7 +49,7 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="1" style="width: 100%; ">
             <button mat-raised-button class="standar" (click)="editarAnotacion()">
-                Guardar
+                {{ 'botones.guardar' | translate }}
             </button>
         </mat-grid-tile>
 

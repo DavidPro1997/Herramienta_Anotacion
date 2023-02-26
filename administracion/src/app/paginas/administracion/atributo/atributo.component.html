@@ -2,18 +2,18 @@
 
   <mat-grid-list cols="4" rowHeight="40px">
     <mat-grid-tile [colspan]="3" [rowspan]="1">
-      <mat-card-title style="width: 100%">Gestión de atributos</mat-card-title>
+      <mat-card-title style="width: 100%">{{ 'atributo.titulo' | translate }}</mat-card-title>
     </mat-grid-tile>
 
 
     <mat-grid-tile [colspan]="1" [rowspan]="2">
       <button [disabled]="botonNuevoDeshabilitado" mat-raised-button class="standar" style="height: 35px; color: white"
-        (click)="nuevoAtributo()">+Nuevo</button>
+        (click)="nuevoAtributo()">{{ 'botones.nuevo' | translate }} </button>
     </mat-grid-tile>
 
 
     <mat-grid-tile [colspan]="3" [rowspan]="1">
-      <mat-card-subtitle style="width: 100%"> Lista, creación, eliminación y edición de atributos: </mat-card-subtitle>
+      <mat-card-subtitle style="width: 100%"> {{ 'atributo.descripcion' | translate }} </mat-card-subtitle>
     </mat-grid-tile>
   </mat-grid-list>
 
@@ -24,9 +24,9 @@
 
       <mat-grid-tile [colspan]="4" [rowspan]="2">
         <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Escoja un tratamiento de datos</mat-label>
+          <mat-label>{{ 'atributo.tratamiento' | translate }} </mat-label>
           <mat-select [formControl]="tratamientoControl" required>
-            <mat-option style="color: black; font-weight: bold;" (click)="vaciarTratamientoSeleccionado()">Ninguno
+            <mat-option style="color: black; font-weight: bold;" (click)="vaciarTratamientoSeleccionado()">{{ 'atributo.ninguno' | translate }}
             </mat-option>
             <mat-option *ngFor="let tratamiento of tratamientos" [value]="tratamiento.descripcion"
               (click)="seleccionarAtributos(tratamiento)">
@@ -54,19 +54,19 @@
       </ng-container>
 
       <ng-container matColumnDef="descripcion">
-        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'atributo.tabla.desc' | translate }}</th>
         <td mat-cell *matCellDef="let atributo">{{atributo?.descripcion}}</td>
       </ng-container>
 
       <ng-container matColumnDef="color_primario">
-        <th mat-header-cell *matHeaderCellDef>Color</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'atributo.tabla.color' | translate }}</th>
         <td mat-cell *matCellDef="let atributo">
           <mat-icon [ngStyle]="{'color': atributo?.color_primario}">fiber_manual_record</mat-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="editar">
-        <th mat-header-cell *matHeaderCellDef >Editar</th>
+        <th mat-header-cell *matHeaderCellDef >{{ 'atributo.tabla.editar' | translate }}</th>
         <td mat-cell *matCellDef="let atributo">
 
           <button mat-raised-button (click)="editarAtributo(atributo)">
@@ -76,7 +76,7 @@
       </ng-container>
 
       <ng-container matColumnDef="eliminar">
-        <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'atributo.tabla.eliminar' | translate }}</th>
         <td mat-cell *matCellDef="let atributo">
           <button mat-raised-button (click)="eliminarAtributo(atributo.id)">
             <mat-icon>close_rounded</mat-icon>

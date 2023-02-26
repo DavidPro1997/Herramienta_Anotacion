@@ -12,7 +12,6 @@ import { Color } from './color'
 })
 export class PaletaColoresComponent {
 
-  cabecera: string;
   color_primario: string;
   id: number;
   @Output() event = new EventEmitter();
@@ -26,7 +25,6 @@ export class PaletaColoresComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.color_primario = data.color_primario;
     this.id = null;
-    this.cabecera = 'Color escogido'
   }
 
   public show = true;

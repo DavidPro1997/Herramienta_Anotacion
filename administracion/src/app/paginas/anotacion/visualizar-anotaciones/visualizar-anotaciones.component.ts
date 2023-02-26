@@ -4,6 +4,8 @@ import { AnotacionService } from '../anotacion.service';
 import { MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
 import { ComentarioAnotacionComponent } from '../comentario-anotacion/comentario-anotacion.component';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-visualizar-anotaciones',
@@ -22,7 +24,8 @@ export class VisualizarAnotacionesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data : any,
     private _anotacionService : AnotacionService,
     private _notificacion : MatSnackBar,
-    private _dialogo : MatDialog
+    private _dialogo : MatDialog,
+    private translate: TranslateService
   ) { 
     this.usuarioId = this.data.usuarioId
     this.parrafoId = this.data.parrafoId
@@ -39,13 +42,26 @@ export class VisualizarAnotacionesComponent implements OnInit {
   }
 
   eliminarAnotacion(anotacionAux : UsuarioAnotacion){
-    if(confirm("Esta seguro de eliminar esta anotacion?\nEsta acción no podra ser revertida")){
+    let mensaje = '';
+    let nota = '';
+    this.translate.stream("anotar.dialogo.confirmar_eliminar").subscribe((res: string)=>{
+      mensaje = res;
+    });
+    if(confirm(mensaje)){
       this._anotacionService.eliminarAnotacion(anotacionAux.id).subscribe(
         ()=> {
-          this.notificacion("Anotación eliminada con exito!", "exito-snackbar")
+          this.translate.stream("anotar.dialogo.exito_eliminar").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "exito-snackbar")
           this.consultarAnotaciones()
         },
-        () => this.notificacion("ERROR eliminando anotación!", "fracaso-snackbar")
+        () => {
+          this.translate.stream("anotar.dialogo.error_eliminar").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "fracaso-snackbar")
+        }
       )
     }
   }

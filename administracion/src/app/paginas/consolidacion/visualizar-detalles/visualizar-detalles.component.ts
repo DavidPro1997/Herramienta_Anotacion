@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { PoliticaAnotarConsultar } from '../../administracion/politica/politica';
+import { PoliticaAnotarConsultar } from '../../administracion/politica/gestion/gestion';
 import { AnotacionService } from '../../anotacion/anotacion.service';
 import { DetallesAnotacion } from '../../anotacion/anotacion';
 

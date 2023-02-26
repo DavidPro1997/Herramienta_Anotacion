@@ -6,6 +6,9 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { PoliticaComponent } from './politica/politica.component';
 import { AtributoComponent } from './atributo/atributo.component';
 import { ValorComponent } from './valor/valor.component';
+import { GestionComponent } from './politica/gestion/gestion.component';
+import { InsertarComponent } from './politica/insertar/insertar.component';
+import { ReporteComponent } from './reporte/reporte.component';
 
 const routes: Routes = [{
     path: '',
@@ -16,8 +19,8 @@ const routes: Routes = [{
             component:UsuarioComponent
         },
         {
-            path: 'politicas',
-            component: PoliticaComponent
+            path:'politicas',
+            loadChildren: () => import('./politica/politica.module').then(m => m.PolticaModule)
         },
         {
             path:'tratamientos',
@@ -30,7 +33,21 @@ const routes: Routes = [{
         {
             path: 'valores',
             component: ValorComponent
+        }/*,
+        {
+            path: 'politicas/gestion',
+            component: GestionComponent
         },
+        {
+            path: 'politicas/insertar',
+            component: InsertarComponent
+        }*/,
+        {
+            path: 'reportes',
+            component: ReporteComponent
+        },
+        
+    
     ]
 }]
 

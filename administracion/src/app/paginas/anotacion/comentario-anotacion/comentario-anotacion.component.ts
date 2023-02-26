@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { UsuarioAnotacion, AnotacionEditar } from '../anotacion';
 import { AnotacionService } from '../anotacion.service';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-comentario-anotacion',
@@ -17,7 +19,8 @@ export class ComentarioAnotacionComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _anotacionService: AnotacionService,
     private _dialogoInterno: MatDialogRef<ComentarioAnotacionComponent>,
-    private _notificacion: MatSnackBar
+    private _notificacion: MatSnackBar,
+    private translate: TranslateService
   ) {
     this.anotacion = data.anotacionAux;
   }
@@ -36,10 +39,20 @@ export class ComentarioAnotacionComponent {
 
     this._anotacionService.editarAnotacion(anotacionEditarAux).subscribe(
       () => {
-        this.notificacion("Anotacion editada con exito!", "exito-snackbar")
+        let nota = '';
+        this.translate.stream("anotar.dialogo.editar_exito").subscribe((res: string)=>{
+          nota = res;
+        });
+        this.notificacion(nota, "exito-snackbar")
         this._dialogoInterno.close()
       },
-      () => this.notificacion("ERROR editando anotacion!", "fracaso-snackbar")
+      () => {
+        let nota = '';
+        this.translate.stream("anotar.dialogo.editar_error").subscribe((res: string)=>{
+          nota = res;
+        });
+        this.notificacion(nota, "fracaso-snackbar")
+      }
     )
   }
 

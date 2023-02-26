@@ -8,9 +8,11 @@ import { ConsolidacionPoliticaComponent } from './consolidacion-politica/consoli
 import { SelectTextConsolidacionComponent } from './select-text-consolidacion/select-text-consolidacion.component';
 import { UsuarioAnotacionComponent } from './usuario-anotacion/usuario-anotacion.component';
 import { VisualizarDetallesComponent } from './visualizar-detalles/visualizar-detalles.component';
+import { TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     TreeViewConsolidacionComponent,
     ConsolidacionPoliticaComponent,
@@ -21,7 +23,8 @@ import { VisualizarDetallesComponent } from './visualizar-detalles/visualizar-de
   imports: [
     CommonModule,
     AnotacionModule,
-    Material
+    Material,
+    TranslateModule,
   ],
   providers:[ ChecklistDatabase],
   exports:[

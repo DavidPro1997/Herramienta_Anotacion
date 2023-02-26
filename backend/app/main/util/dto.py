@@ -61,7 +61,14 @@ class ModuloDto:
         'hijos': fields.List(fields.Nested(api.model('hijos', {
             'nombre': fields.String,
             'icono': fields.String,
-            'path': fields.String
+            'path': fields.String,
+            'hijos': fields.List(fields.Nested(api.model('hijos', {
+                'nombre': fields.String,
+                'icono': fields.String,
+                'path': fields.String
+            
+        })))
+            
         })))
     })
 
@@ -182,6 +189,20 @@ class PoliticaDto:
         'url': fields.String,
         'fecha': fields.Date,
         'asignada': fields.Boolean
+    })
+
+    politicaAnotadaConsultar = api.model('politicaAnotadaConsultar', {
+        'id_politica': fields.Integer,
+        'id_usuario': fields.Integer,
+        'nombre': fields.String,
+        'usuario': fields.String,
+        'tipo_usuario': fields.String,
+        'fecha': fields.Date,
+        'anotaciones': fields.Integer
+    })
+
+    reporte = api.model('reporte', {
+        'reporte': fields.String
     })
 
     politicaMostrar = api.model('PoliticaMostrar', {

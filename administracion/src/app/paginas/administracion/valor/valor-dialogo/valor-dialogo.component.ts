@@ -5,6 +5,8 @@ import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms'
 import { ValorService } from '../valor.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-valor-dialogo',
@@ -24,15 +26,20 @@ export class ValorDialogoComponent implements OnInit {
     private _valorService : ValorService,
     private _notificacion : MatSnackBar,
     private _dialogoInterno : MatDialogRef<ValorDialogoComponent>,
+    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) private data : any
     ) { 
       this.valor = data.valor
       this.nuevo = data.nuevo
       this. formulario = this.crearFormulario(this.valor)
       if (this.nuevo){
-        this.titulo = "Creación de Valor"
+        this.translate.stream("valor.dialogo.titulo1").subscribe((res: string)=>{
+          this.titulo = res;
+       });
       }else{
-        this.titulo = "Edición de Valor"
+        this.translate.stream("valor.dialogo.titulo2").subscribe((res: string)=>{
+          this.titulo = res;
+       });
       }
     }
 
@@ -46,20 +53,40 @@ export class ValorDialogoComponent implements OnInit {
   guardarValor(valorAux : ValorGuardar){
     this._valorService.crearValor(valorAux).subscribe(
       ()=> {
-        this.notificacion("Valor creado con éxito!", "exito-snackbar")
+        let note = '';
+        this.translate.stream("valor.dialogo.exito").subscribe((res: string)=>{
+          note = res;
+        });
+        this.notificacion(note, "exito-snackbar")
         this._dialogoInterno.close()
       },
-      () => this.notificacion("ERROR creando valor!", "fracaso-snackbar")
+      () => {
+        let note = '';
+        this.translate.stream("valor.dialogo.error").subscribe((res: string)=>{
+          note = res;
+        });
+        this.notificacion("ERROR creando valor!", "fracaso-snackbar")
+      }
     )
   }
 
   editarValor(valorAux : ValorEditar){
     this._valorService.editarValor(valorAux).subscribe(
       ()=> {
-        this.notificacion("Valor editado con éxito!", "exito-snackbar")
+        let note = '';
+        this.translate.stream("valor.dialogo.exito_editar").subscribe((res: string)=>{
+          note = res;
+        });
+        this.notificacion(note, "exito-snackbar")
         this._dialogoInterno.close()
       },
-      () => this.notificacion("ERROR editando valor!", "fracaso-snackbar")
+      () => {
+        let note = '';
+        this.translate.stream("valor.dialogo.error_editar").subscribe((res: string)=>{
+          note = res;
+        });
+        this.notificacion(note, "fracaso-snackbar")
+      }
     )
   }
 
@@ -80,7 +107,11 @@ export class ValorDialogoComponent implements OnInit {
       }
     
     }else{
-      alert("El formulario contiene errores, por favor revíselo.")
+      let note = '';
+        this.translate.stream("valor.dialogo.error_form").subscribe((res: string)=>{
+          note = res;
+        });
+      alert(note)
     }
 
   }

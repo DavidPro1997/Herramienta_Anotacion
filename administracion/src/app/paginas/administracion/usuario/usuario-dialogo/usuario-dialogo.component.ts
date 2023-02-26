@@ -5,6 +5,8 @@ import { UsuarioGuardar, RolUsuario, UsuarioEditar } from '../usuario';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
 import { UsuarioService } from '../usuario.service';
 import { UsuarioAnotacion } from 'src/app/paginas/anotacion/anotacion';
+import {TranslateService} from "@ngx-translate/core";
+
 
 
 @Component({
@@ -44,17 +46,21 @@ export class UsuarioDialogoComponent{
     @Inject(MAT_DIALOG_DATA) private data: any,
     private _notificacion : MatSnackBar,
     private _usuarioService : UsuarioService,
-    private _dialogoInterno : MatDialogRef<UsuarioDialogoComponent>
+    private _dialogoInterno : MatDialogRef<UsuarioDialogoComponent>,
+    private translate: TranslateService
   ) {
     this.usuarioAux = data.usuario
     this.nuevo = data.nuevo
     this.formulario = this.crearFormulario(this.usuarioAux)
-
     if (this.nuevo) {
-      this.titulo = 'Creación de usuario'
+      this.translate.stream("usuario.dialogo.titulo1").subscribe((res: string)=>{
+        this.titulo = res;
+      });   
     } else {
       this.id = this.data.usuario.id
-      this.titulo = 'Edición de usuario'
+      this.translate.stream("usuario.dialogo.titulo2").subscribe((res: string)=>{
+        this.titulo = res;
+      });
     }
   }
 
@@ -88,7 +94,11 @@ export class UsuarioDialogoComponent{
         this.editarUsuario(usuarioEditar)
       }
     }else{
-      this.notificacion('El formulario contiene campos vacios', 'fracaso-snackbar', 4000)
+      let aux = '';
+          this.translate.stream("usuario.dialogo.error").subscribe((res: string)=>{
+            aux = res;
+          });
+      this.notificacion(aux, 'fracaso-snackbar', 4000)
     }
   }
 

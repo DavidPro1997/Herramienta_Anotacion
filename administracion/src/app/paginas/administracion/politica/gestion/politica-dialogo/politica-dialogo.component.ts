@@ -1,14 +1,15 @@
 import { Component, Inject } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormBuilder } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBarConfig, MatSnackBar } from "@angular/material";
-import { PoliticaGuardar, RespuestaPoliticaVisualizar, PoliticaConsultar } from "../politica";
+import { PoliticaGuardar, RespuestaPoliticaVisualizar, PoliticaConsultar } from "../gestion";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import * as moment from "moment";
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material";
 import { DOCUMENT } from "@angular/common"
-import { PoliticaService } from "../politica.service"
+import { PoliticaService } from "../gestion.service"
 import { PrevisualizacionComponent } from "../previsualizacion/previsualizacion.component"
 import { NotificacionComponent } from "src/app/notificacion/notificacion.component";
+import {TranslateService} from "@ngx-translate/core";
 
 
 export const MY_FORMATS = {
@@ -68,7 +69,8 @@ export class PoliticaDialogoComponent {
     @Inject(DOCUMENT) private documento: Document,
     private _politicaService: PoliticaService,
     private fb: FormBuilder,
-    private _notificacion : MatSnackBar
+    private _notificacion : MatSnackBar,
+    private translate: TranslateService
   ) {
     this.politicaAux = data.politica  
     this.nuevo = data.nuevo
@@ -76,10 +78,14 @@ export class PoliticaDialogoComponent {
     this.formulario = this.crearFormulario(this.politicaAux);
     
     if (this.nuevo) {
-      this.titulo = "Subir política de privacidad"
+      this.translate.stream("politica.gestion.dialogo.titulo1").subscribe((res: string)=>{
+        this.titulo = res;
+      }); 
     } else {
       this.id = this.data.politica.id
-      this.titulo = "Edición de política de privacidad"
+      this.translate.stream("politica.gestion.dialogo.titulo2").subscribe((res: string)=>{
+        this.titulo = res;
+      });
     }
   }
 
@@ -96,15 +102,27 @@ export class PoliticaDialogoComponent {
   }
 
   errorNombre() {
-    return this.nombre.hasError("required") ? "Ingrese un nombre" : "";
+    let error
+    this.translate.stream("politica.gestion.dialogo.error_nombre").subscribe((res: string)=>{
+      error = res
+    });
+    return this.nombre.hasError("required") ? error : "";
   }
 
   errorUrl() {
-    return this.url.hasError("required") ? "Ingrese una url" : "";
+    let error
+    this.translate.stream("politica.gestion.dialogo.error_url").subscribe((res: string)=>{
+      error = res
+    });
+    return this.nombre.hasError("required") ? error : "";
   }
 
   errorFecha() {
-    return this.fecha.hasError("required") ? "Escoja una fecha" : "";
+    let error
+    this.translate.stream("politica.gestion.dialogo.error_fecha").subscribe((res: string)=>{
+      error = res
+    });
+    return this.nombre.hasError("required") ? error : "";
   }
 
   onNoClick(): void {
@@ -122,7 +140,11 @@ export class PoliticaDialogoComponent {
       console.log(politicaEditar)
       this._politicaService.editarPolitica(politicaEditar).subscribe(
         () => {
-          this.notificacion("Politica editada con exito!","exito-snackbar")
+          let mensaje = '';
+          this.translate.stream("politica.gestion.dialogo.exito_editar").subscribe((res: string)=>{
+            mensaje = res;
+          });
+          this.notificacion(mensaje,"exito-snackbar")
           this._dialogoInterno.close()
         },
         error => {
@@ -130,13 +152,16 @@ export class PoliticaDialogoComponent {
         }
       )
     } else {
-      alert("El formulario contiene errores, por favor corrijalo")
+      this.translate.stream("politica.gestion.dialogo.error_formulario").subscribe((res: string)=>{
+        alert(res)
+
+      });
     }
   }
 
   escogerArchivo(archivo: FileList) {
     this.archivoPolitica = archivo.item(0);
-    this.nombreArchivo = this.archivoPolitica.name;""
+    this.nombreArchivo = this.archivoPolitica.name;
     this.archivoEscogido = true;
   }
 
@@ -158,10 +183,16 @@ export class PoliticaDialogoComponent {
         .subscribe(
           resultado => {
             this.dialogoPrevisualizar(resultado, politicaPrevisualizar, this.archivoPolitica)
+          },
+          error => {
+            console.log(error)
+            this.notificacion(error.error.mensaje? error.error.mensaje : "Error", "fracaso-snackbar")
           }
         )
     } else {
-      alert("El formulario contiene errores, por favor corrijalo")
+      this.translate.stream("politica.gestion.dialogo.error_formulario").subscribe((res: string)=>{
+        alert(res)
+      });
     }
   }
 

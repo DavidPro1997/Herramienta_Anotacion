@@ -1,15 +1,16 @@
 from flask_restplus import Resource
 from flask import request
 from ..util.dto import PoliticaDto
-from..service.politica_service import previsualizar_politica, guardar_politica, guardar_usuario_politica, \
+from..service.politica_service import previsualizar_politica, guardar_politica,guardar_politica2 ,guardar_usuario_politica, \
     actualizar_usuario_politica_asignada, consultar_politicas_anotador_no_finalizadas,\
     consultar_politicas_consolidador_no_finalizadas, consultar_politica_parrafos, consultar_politicas, \
-    eliminar_politica, editar_politica, actualizar_politica_asignada
+    eliminar_politica, editar_politica, actualizar_politica_asignada,contar_urls, extraerTexto, consultar_politicas_anotadas, \
+    generarReporte
 
 api = PoliticaDto.api
 _politicaUsuarioGuardar = PoliticaDto.politicaUsuarioGuardar
 
-
+#Aqui se guarda una politica que ha sido ingresada de forma manual
 @api.route('/')
 class Politica(Resource):
     @api.response(201, 'Poltica procesada y creada')
@@ -27,6 +28,48 @@ class Politica(Resource):
     def patch(self):
         data = request.json
         return editar_politica(data)
+    
+#Aqui se guarda una politica que ha sido extraido el texto de forma automatica con la URL
+@api.route('/Guardar')
+class Politica(Resource):
+    @api.response(201, 'Poltica procesada y creada')
+    @api.doc('Crear nueva politica de privacidad')
+    def post(self):
+        return guardar_politica2()
+
+
+@api.route('/Anotada/<tipo>')
+@api.param('tipo', 'Tipo de politicas anotadas a consultat')
+@api.response(404, 'Tipo de politica no encontrada')
+class Politica(Resource):
+    @api.response(201, 'Lista de politicas anotadas finalizadas o no finalzadas')
+    @api.doc('Consultar politicas de privacidad anotadas')
+    def get(self, tipo):
+        return consultar_politicas_anotadas(tipo=tipo)
+
+@api.route('/Archivo')
+class Politica(Resource):
+    @api.response(201, 'URLs contadas con exito')
+    @api.doc('Contar URLs del archivo')
+    def post(self):
+        data = request.json
+        return contar_urls(data)
+
+@api.route('/Reporte')
+class Politica(Resource):
+    @api.response(201, 'Generacion de reporte')
+    @api.doc('Generar reporte')
+    def post(self):
+        data = request.json
+        return generarReporte(data)
+
+@api.route('/Extraer')
+class Politica(Resource):
+    @api.response(201, 'Extrae el texto de una politica de privacidad')
+    @api.doc('Extraer texto de una URL')
+    def post(self):
+        data = request.json
+        return extraerTexto(data)
 
 
 @api.route('/Asignada')

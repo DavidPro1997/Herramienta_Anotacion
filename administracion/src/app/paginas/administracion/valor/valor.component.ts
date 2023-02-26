@@ -9,6 +9,8 @@ import { ValorService } from './valor.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ValorDialogoComponent } from './valor-dialogo/valor-dialogo.component';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-valor',
@@ -44,7 +46,8 @@ export class ValorComponent implements OnInit {
     private _atributoService: AtributoService,
     private _valorService: ValorService,
     private _dialogo: MatDialog,
-    private _notificacion : MatSnackBar
+    private _notificacion : MatSnackBar,
+    private translate: TranslateService
   ) { }
 
 
@@ -80,13 +83,27 @@ export class ValorComponent implements OnInit {
   }
 
   eliminarValor(valorId: number){
-    if (confirm("Esta seguro de eliminar este valor?\nRecuerde que esta acción no podra revertirse")){
+    let mensaje = '';
+    this.translate.stream("valor.eliminar.confirmar").subscribe((res: string)=>{
+      mensaje = res;
+    });
+    if (confirm(mensaje)){
       this._valorService.eliminarValor(valorId).subscribe(
         ()=> {
-          this.notificacion("Valor eliminado con exito!", "exito-snackbar")
+          let nota = '';
+          this.translate.stream("valor.eliminar.exito").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "exito-snackbar")
           this.consultarValoresAtributo(this.atributoEscogido.id)
         },
-        () => this.notificacion("ERROR eliminando valor!", "fracaso-snackbar")
+        () => {
+          let nota = '';
+          this.translate.stream("valor.eliminar.error").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "fracaso-snackbar")
+        }
       )
     }
     

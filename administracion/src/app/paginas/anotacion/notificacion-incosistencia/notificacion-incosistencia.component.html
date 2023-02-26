@@ -1,21 +1,21 @@
 <div style="height: 100%;">
     <mat-toolbar class="standar">
-        <span style="width: 100%;text-align: center;">INCONSISTENCIA</span>
+        <span style="width: 100%;text-align: center;">{{ 'anotar.dialogo.inconsistencia' | translate }}</span>
     </mat-toolbar>
 
     <mat-card>
         <div>
             <h4>
-                El(los) siguiente(s) tratamiento(s) es(son) inconsistente(s):
+                {{ 'anotar.dialogo.inconsistencia_mensaje' | translate }}
             </h4>
             <h4>
-                Bajo la accion de: 
+                {{ 'anotar.dialogo.accion' | translate }}
                 <span *ngIf="anotacion.ejecuta; else noEjecuta">
-                    <span style="color: forestgreen;">Ejecuta</span> 
+                    <span style="color: forestgreen;">{{ 'anotar.dialogo.ejecuta' | translate }}</span> 
                 </span>
 
                 <ng-template #noEjecuta>
-                    <span style="color: tomato;"> No ejecuta </span>
+                    <span style="color: tomato;"> {{ 'anotar.dialogo.no_ejecuta' | translate }} </span>
                 </ng-template>
                 
                 
@@ -35,7 +35,7 @@
         <div *ngIf="notificacion.valores_sugeridos.length > 0; else noSugerencias">
             <div>
                 <h4>
-                   Para este parrafo se sugiere los siguientes tratamientos:
+                    {{ 'anotar.dialogo.sugerencia1' | translate }}
                 </h4>
             </div>
     
@@ -52,9 +52,9 @@
 
         <ng-template #noSugerencias>
             <h4>
-                Este parrafo ha sido codificado sin ninguna anotacion.
+                {{ 'anotar.dialogo.codificar' | translate }}
                 <br>
-                Considere en no marcar ningun valor y continuar al siguiente párrafo.
+                {{ 'anotar.dialogo.sugerencia2' | translate }}
             </h4>
         </ng-template>
 
@@ -62,7 +62,7 @@
             <mat-grid-list cols="6" rowHeight="25px">
                 <mat-grid-tile [colspan]="6" [rowspan]="1" style="padding-top: 20px;">
                     <span style="font-size: 20px;font-weight: 500; text-align: left; width: 100%;">
-                        ¿Aún desea guardar esta anotación?
+                        {{ 'anotar.dialogo.mensaje_guardar' | translate }}
                     </span>
                 </mat-grid-tile>
 
@@ -72,14 +72,14 @@
 
                 <mat-grid-tile [colspan]="1" [rowspan]="2">
                     <button (click)="cancelar()" class="standar" mat-button>
-                        Cancelar
+                        {{ 'botones.cancelar' | translate }}
                         <mat-icon>clear</mat-icon>
                     </button>
                 </mat-grid-tile>
 
                 <mat-grid-tile [colspan]="1" [rowspan]="2">
                     <button (click)="guardarAnotacion()" class="botonPositivo" mat-button>
-                        Guardar
+                        {{ 'botones.guardar' | translate }}
                         <mat-icon>save</mat-icon>
                     </button>
                 </mat-grid-tile>

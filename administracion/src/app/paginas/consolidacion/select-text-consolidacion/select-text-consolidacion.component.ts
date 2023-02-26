@@ -1,13 +1,16 @@
 import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { PoliticaService } from '../../administracion/politica/politica.service';
-import { PoliticaVisualizar } from '../../administracion/politica/politica';
+import { PoliticaService } from '../../administracion/politica/gestion/gestion.service';
+import { PoliticaVisualizar } from '../../administracion/politica/gestion/gestion';
 import { UsuarioAnotacionService } from '../usuario-anotacion/usuario-anotacion.service';
 import { SelectTextConsolidacionService } from './select-text-consolidacion.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { VisualizarAnotacionesComponent } from '../../anotacion/visualizar-anotaciones/visualizar-anotaciones.component';
 import { Router } from '@angular/router';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
+import { not } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-select-text-consolidacion',
@@ -39,7 +42,8 @@ export class SelectTextConsolidacionComponent implements OnInit {
     private _seleccionarTextoConsolidacionService : SelectTextConsolidacionService,
     private _dialogo : MatDialog,
     private _notificacion: MatSnackBar,
-    private _router: Router
+    private _router: Router,
+    private translate: TranslateService
     ) {}
 
   visualizarAnotaciones(){
@@ -135,19 +139,32 @@ export class SelectTextConsolidacionComponent implements OnInit {
       elemento.innerHTML = this.parrafoActual;
       this.parrafo_cambiado.emit()
     }else{
-      if (confirm("Ha terminado de anotar esta política, desea finalizar?\nUna vez finalizada no podra ser modificada")) {
+      let mensaje = '';
+      this.translate.stream("consolidar.dialogo.confirmar").subscribe((res: string)=>{
+        mensaje = res;
+      });
+      if (confirm(mensaje)) {
         this.politicaUsuarioFinalizada()
       }
     }
   }
 
   politicaUsuarioFinalizada() {
+    let nota = '';
     this._politicaService.editarPoliticaAnotadorFinalizada(this.politicaId, this.usuario.id, true).subscribe(
       () => {
-        this.notificacion("Politica finalizada con exito!", "exito-snackbar")
+        this.translate.stream("consolidar.dialogo.exito").subscribe((res: string)=>{
+          nota = res;
+        });
+        this.notificacion(nota, "exito-snackbar")
         this._router.navigate(['/paginas/consolidacion'])
       },
-      () => this.notificacion("ERROR finalizando politica!", "fracaso-snackbar")
+      () => {
+        this.translate.stream("consolidar.dialogo.error").subscribe((res: string)=>{
+          nota = res;
+        });
+        this.notificacion(nota, "fracaso-snackbar")
+      }
     )
   }
 
@@ -158,7 +175,11 @@ export class SelectTextConsolidacionComponent implements OnInit {
       this.guardar_anotacion.emit()
       this.limpiarTextoEscogido()
     }else{
-      alert("No existe texto seleccionado");
+      let nota = '';
+      this.translate.stream("consolidar.dialogo.texto").subscribe((res: string)=>{
+        nota = res;
+      });
+      alert(nota);
     }
     
   }

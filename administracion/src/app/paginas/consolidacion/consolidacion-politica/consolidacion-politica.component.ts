@@ -9,6 +9,8 @@ import { NotificacionComponent } from 'src/app/notificacion/notificacion.compone
 import { MatSnackBar } from '@angular/material';
 import { SelectTextConsolidacionService } from '../select-text-consolidacion/select-text-consolidacion.service';
 import { TreeViewConsolidacionService } from '../tree-view-consolidacion/tree-view-consolidacion.service';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-consolidacion-politica',
@@ -35,7 +37,8 @@ export class ConsolidacionPoliticaComponent implements OnInit {
     private _anotacionService: AnotacionService,
     private _seleccionarTextoService: SelectTextConsolidacionService,
     private _treeViewService: TreeViewConsolidacionService,
-    private _notificacion: MatSnackBar
+    private _notificacion: MatSnackBar,
+    private translate: TranslateService
   ) {
     this.politicaId = this._router.getCurrentNavigation().extras.state.politica_id;
     this._seleccionarTextoService.obtenerTexto().subscribe(
@@ -79,7 +82,11 @@ export class ConsolidacionPoliticaComponent implements OnInit {
   guardarAnotacion() {
     this.valores = [];
     if (this.listaValores.length == 0) {
-      alert("ES NECESARIO SELECCIONAR AL MENOS UN TRATAMIENTO DE DATOS")
+      let mensaje = '';
+      this.translate.stream("consolidar.dialogo.advertencia").subscribe((res: string)=>{
+        mensaje = res;
+      });
+      alert(mensaje)
     } else {
       this.listaValores.forEach(
         valor => {
@@ -92,7 +99,11 @@ export class ConsolidacionPoliticaComponent implements OnInit {
 
       this._anotacionService.guardarAnotacion(anotacion).subscribe(
         () => {
-          this.notificacion("Anotacion creada con exito!", "exito-snackbar")
+          let nota = '';
+          this.translate.stream("consolidar.dialogo.anotacion_exito").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "exito-snackbar")
           setTimeout(
             () => {
 
@@ -105,7 +116,13 @@ export class ConsolidacionPoliticaComponent implements OnInit {
             1000
           )
         },
-        () => this.notificacion("ERROR creando anotacion!", "fracaso-snackbar")
+        () => {
+          let nota = '';
+          this.translate.stream("consolidar.dialogo.anotacion_error").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "fracaso-snackbar")
+        }
       )
     };
   }

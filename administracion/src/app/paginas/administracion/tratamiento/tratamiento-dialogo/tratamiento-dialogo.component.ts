@@ -6,6 +6,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { TratamientoService } from '../tratamiento.service';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
 import { MatSnackBar } from '@angular/material';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-tratamiento-dialogo',
@@ -31,15 +32,20 @@ export class TratamientoDialogoComponent {
     private _dialogoInterno: MatDialogRef<TratamientoDialogoComponent>,
     private _tratamientoService : TratamientoService,
     private _notificacion : MatSnackBar,
+    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: any) 
     {
     this.tratamientoAux = data.tratamientoAux
     this.formulario = this.crearFormulario(this.tratamientoAux);
     this.nuevo = data.nuevo;
     if (this.nuevo) {
-      this.titulo = 'Creación de Tratamiento'
+      this.translate.stream("tratamiento.dialogo.titulo1").subscribe((res: string)=>{
+        this.titulo = res;
+      });
     } else {
-      this.titulo = 'Edición de Tratamiento'
+      this.translate.stream("tratamiento.dialogo.titulo2").subscribe((res: string)=>{
+        this.titulo = res;
+      });
     }
 
   }
@@ -56,13 +62,27 @@ export class TratamientoDialogoComponent {
     if (this.formulario.valid){
       return this._tratamientoService.crearTratamiento(tratamientoAux).subscribe(
         () =>{
-          this.notificacion("Tratamiento creado con éxito!", "exito-snackbar")
+          let mensaje = '';
+          this.translate.stream("tratamiento.dialogo.dialogo.exito").subscribe((res: string)=>{
+            mensaje = res;
+          });
+          this.notificacion(mensaje, "exito-snackbar")
           this._dialogoInterno.close()
         }, 
-        () => this.notificacion("Error creando tratamiento!", "fracaso-snackbar") 
+        () => {
+          let mensaje = '';
+          this.translate.stream("tratamiento.dialogo.dialogo.error").subscribe((res: string)=>{
+            mensaje = res;
+          });
+          this.notificacion(mensaje, "fracaso-snackbar") 
+        }
       )
     }else{
-      alert("El formulario contiene errores.\nPor favor revíselo")
+      let mensaje = '';
+          this.translate.stream("tratamiento.dialogo.dialogo.error_form").subscribe((res: string)=>{
+            mensaje = res;
+          });
+      alert(mensaje)
     }
     
   }
@@ -70,10 +90,20 @@ export class TratamientoDialogoComponent {
   editarTratamiento(tratamientoAux : TratamientoEditar){
     return this._tratamientoService.editarTratamiento(tratamientoAux).subscribe(
       () =>{
-        this.notificacion("Tratamiento editado con éxito!", "exito-snackbar")
+        let mensaje = '';
+          this.translate.stream("tratamiento.dialogo.dialogo.exito_editar").subscribe((res: string)=>{
+            mensaje = res;
+          });
+        this.notificacion(mensaje, "exito-snackbar")
         this._dialogoInterno.close()
       }, 
-      () => this.notificacion("Error editando tratamiento!", "fracaso-snackbar") 
+      () => {
+        let mensaje = '';
+          this.translate.stream("tratamiento.dialogo.dialogo.error_editar").subscribe((res: string)=>{
+            mensaje = res;
+          });
+        this.notificacion(mensaje, "fracaso-snackbar") 
+      }
     )
   }
 
@@ -131,7 +161,11 @@ export class TratamientoDialogoComponent {
       }
 
     }else{
-      alert("El formulario contiene errores, por favor revíselo")
+      let mensaje = '';
+          this.translate.stream("tratamiento.dialogo.dialogo.error_form").subscribe((res: string)=>{
+            mensaje = res;
+          });
+      alert(mensaje)
     }
   }
 

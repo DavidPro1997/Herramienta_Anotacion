@@ -5,6 +5,7 @@ import { TratamientoService } from './tratamiento.service';
 import { TratamientoConsultar } from './tratamiento';
 import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-tratamiento',
@@ -22,6 +23,7 @@ export class TratamientoComponent {
     private _dialogo: MatDialog,
     private _tratamientoService: TratamientoService,
     private _notificacion : MatSnackBar,
+    private translate: TranslateService,
     ) {
       this.consultarTratamientos();
     }
@@ -58,13 +60,27 @@ export class TratamientoComponent {
   }
 
   eliminarTratamiento(tratamientoId : number){
-    if (confirm("Esta seguro de eliminar este tratamiento?\nRecuerde que esta acción no podra revertirse")){
+    let mensaje = '';
+      this.translate.stream("tratamiento.eliminar.confirmar").subscribe((res: string)=>{
+        mensaje = res;
+      });
+    if (confirm(mensaje)){
       this._tratamientoService.eliminarTratamiento(tratamientoId).subscribe(
         () => {
-          this.notificacion("Tratamiento eliminado con exito!", "exito-snackbar")
+          let nota = '';
+          this.translate.stream("tratamiento.eliminar.exito").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "exito-snackbar")
           this.consultarTratamientos()
         },
-        () => this.notificacion("ERROR eliminando tratamiento!", "fracaso-snackbar")
+        () => {
+          let nota = '';
+          this.translate.stream("tratamiento.eliminar.error").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "fracaso-snackbar")
+        }
       )
     }
     
@@ -82,7 +98,14 @@ export class TratamientoComponent {
           return data.descripcion.toLowerCase().includes(filter)
         }
       },
-      () => alert('No ha sido posible cargar la lista de tratamientos')
+      () => {
+        let nota = '';
+          this.translate.stream("tratamiento.error").subscribe((res: string)=>{
+            nota = res;
+          });
+        alert(nota)
+      }
+
     )
   }
 

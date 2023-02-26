@@ -1,12 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { UsuarioAsignar } from '../../usuario/usuario';
+import { UsuarioAsignar } from '../../../usuario/usuario';
 import { SelectionModel } from '@angular/cdk/collections';
-import { UsuarioService } from '../../usuario/usuario.service';
+import { UsuarioService } from '../../../usuario/usuario.service';
 import { MAT_DIALOG_DATA, MatSnackBar, MatDialogRef } from '@angular/material';
-import { PoliticaConsultar } from '../politica';
-import { PoliticaService } from '../politica.service';
+import { PoliticaConsultar } from '../gestion';
+import { PoliticaService } from '../gestion.service';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
 import { error } from 'protractor';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-asignar-politica',
@@ -15,7 +17,6 @@ import { error } from 'protractor';
 })
 export class AsignarPoliticaComponent implements OnInit {
 
-  titulo = "Asignacion de usuarios a politica"
   anotadores : UsuarioAsignar[] = [];
   administradores : UsuarioAsignar[] = [];
 
@@ -28,7 +29,8 @@ export class AsignarPoliticaComponent implements OnInit {
     private _politicaService : PoliticaService,
     private _notificacion : MatSnackBar,
     private _dialogoInterno : MatDialogRef<AsignarPoliticaComponent>,
-    @Inject(MAT_DIALOG_DATA) private data : any
+    @Inject(MAT_DIALOG_DATA) private data : any,
+    private translate: TranslateService
   ) {
     this.consultarAnotadores()
     this.consultarAdministradores()
@@ -64,8 +66,21 @@ export class AsignarPoliticaComponent implements OnInit {
     }
 
     this._politicaService.asignarPoliticaUsuario(politicaUsuario).subscribe(
-      () => this.notificacion('Anotador ' + usuarioAux.email +' asignado con exito!','exito-snackbar'),
-      error => this.notificacion('ERROR asignando' + usuarioAux.email +'a la politica!','fracaso-snackbar')
+      () => {
+        let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.exito_anotador",{anotador:usuarioAux.email}).subscribe((res: string)=>{
+          mensaje = res;
+        });
+        this.notificacion(mensaje,'exito-snackbar');
+
+      },
+      error => {
+        let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.error_asignado",{asignado:usuarioAux.email}).subscribe((res: string)=>{
+          mensaje = res;
+        });
+        this.notificacion(mensaje,'fracaso-snackbar')
+      }
     )
   }
 
@@ -78,25 +93,50 @@ export class AsignarPoliticaComponent implements OnInit {
 
     this._politicaService.asignarPoliticaUsuario(politicaUsuario).subscribe(
       () => {
-        this.notificacion('Administrador ' + usuarioAux.email +' asignado con exito!','exito-snackbar')
+        let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.exito_administrador",{admin:usuarioAux.email}).subscribe((res: string)=>{
+          mensaje = res;
+        });
+        this.notificacion(mensaje,'exito-snackbar')
         this._dialogoInterno.close()
       },
-      error => this.notificacion('ERROR asignando ' + usuarioAux.email + ' a la politica!','fracaso-snackbar')
+      error => {
+        let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.error_asignado",{asignado:usuarioAux.email}).subscribe((res: string)=>{
+          mensaje = res;
+        });
+        this.notificacion(mensaje,'fracaso-snackbar')
+      }
     )
   }
 
   editarPoliticaAsignada(politicaId : number){
     this._politicaService.editarPoliticaAsignada(politicaId).subscribe(
-      () => this.notificacion('Politica asignada con exito!','exito-snackbar'),
-      error => this.notificacion('Error politica asignada','fracaso-snackbar')
+      () => {
+        let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.exito").subscribe((res: string)=>{
+          mensaje = res;
+        });
+        this.notificacion(mensaje,'exito-snackbar')
+      },
+      error => {
+        let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.error").subscribe((res: string)=>{
+          mensaje = res;
+        });
+        this.notificacion(mensaje,'fracaso-snackbar')
+      }
     )
   }
 
   guardar(){
     if (this.anotadoresSeleccionados.selected.length >= 2){
       if(this.administradorEscogido != null){
-
-          if (confirm("Esta seguro de realizar el cambio?\nRecuerde que esto no podra ser editado en un futuro")) {
+        let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.confirmar").subscribe((res: string)=>{
+          mensaje = res;
+        });
+          if (confirm(mensaje)) {
             this.anotadoresSeleccionados.selected.forEach(
               anotador => {
                 this.asignarPoliticaAnotador(this.politicaAux.id, anotador)
@@ -111,10 +151,18 @@ export class AsignarPoliticaComponent implements OnInit {
 
         
       }else{
-        alert('Seleccione un administrador para consolidar')
+        let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.error_consolidador").subscribe((res: string)=>{
+          mensaje = res;
+        });
+        alert(mensaje)
       }
     }else{
-      alert('Seleccione al menos dos anotadores')
+      let mensaje = '';
+        this.translate.stream("politica.gestion.asignar.error_anotador").subscribe((res: string)=>{
+          mensaje = res;
+        });
+      alert(mensaje)
     }
    
   }

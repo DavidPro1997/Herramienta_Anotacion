@@ -2,15 +2,30 @@ from app.main import db
 from app.main.utils import commit_db, guardar_cambios
 from app.main.model.politica import Politica, PoliticaUsuarioRelacion
 from app.main.model.usuario import Usuario
+from app.main.model.parrafo import Parrafo
+from app.main.model.anotacion import Anotacion, AnotacionValorRelacion
+from app.main.model.valor import Valor
+from app.main.model.atributo import Atributo
+from app.main.model.tratamiento import Tratamiento
 from flask import request
 from flask_restplus import marshal
 from werkzeug.utils import secure_filename
 from ..util.clases_auxiliares import PoliticaMostrar, ParrafoMostrar, ParrafoGuardar, PoliticaAnotadorNoFinalizadas, \
-    PoliticaConsultarParrafos
+    PoliticaConsultarParrafos, PoliticaAnotadaConsultar, PoliticaAnotadaReporte
 from ..util.dto import PoliticaDto
 from ..service.parrafo_service import guardar_parrafo, consultar_num_parrafos_politica, eliminar_parrafos_politica
 from ..service.anotacion_service import consultar_ultima_anotacion_usuario_politica, calcular_coeficiente_interanotador
 import os
+import paramiko
+import time
+import re
+from bs4 import BeautifulSoup
+from sqlalchemy import func, select
+import datetime 
+import csv
+import yaml
+
+
 
 EXTENSIONES_PERMITIDAS = {'txt'}
 
@@ -19,17 +34,126 @@ EXTENSIONES_PERMITIDAS = {'txt'}
 #y el sistema se encuentra alojada en un servidor ubuntu
 if os.name == 'nt':
     CARPETA_SUBIDA = os.getcwd() + '\Politicas\\'
+    CARPETA_URL = os.getcwd() + '\Links\\'
+    CARPETA_REPORTE = os.getcwd() + '\Reportes\\'
 else:
     CARPETA_SUBIDA = os.getcwd() + '/Politicas/'
+    CARPETA_URL = os.getcwd() + '/Links/'
+    CARPETA_REPORTE = os.getcwd() + '/Reportes/'
 
 politica_respuesta = PoliticaMostrar
 politica_respuesta.parrafos = []
+
+#Credenciales del servidor Ubuntu
+servidor = "192.168.1.128"
+usuario = "david"
+clave = "4652"
 
 #Se limita las extensiones de archivo que se va a guardar
 def archivo_permitido(nombre_archivo):
     return '.' in nombre_archivo and \
            nombre_archivo.rsplit('.', 1)[1].lower() in EXTENSIONES_PERMITIDAS
 
+#Encuentra una URL especifica en el archivo de texto
+def encuentraURL(linea):
+    try:
+        documento = open(CARPETA_URL+"/listaCompleta.txt")
+        lineas = documento.readlines()
+        num = 0
+        for i in lineas:
+            if i != '\n':
+                num = num+1
+                if num == linea:
+                    aux = i
+                    print(aux)
+        documento.close()
+        return aux
+    except:
+        return "Error"
+
+#Crea un archivo con el nombre de la politica
+def crear_archivo(politica_texto, nombre_archivo):
+    try:
+        archivo = open(CARPETA_SUBIDA+"/"+nombre_archivo+".txt","w", encoding="utf-8")
+        archivo.write(politica_texto)
+        archivo.close()
+        return True
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+        return False
+
+
+#Extrae el texto de politicas de privacidad desde el servidor ubuntu
+def extraerTexto(data):
+    #try:
+    cliente = paramiko.SSHClient()
+    cliente.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    cliente.connect(servidor,username=usuario,password=clave)
+    archivo = cliente.open_sftp()
+    #Creamos el archivo con 1 URL
+    url = encuentraURL(data['num'])
+    if url!='Error':
+        if os.path.exists(CARPETA_URL+"/listaURL.txt"):
+            os.remove(CARPETA_URL+"/listaURL.txt")
+        if os.path.exists(CARPETA_SUBIDA+"/PrivacyPolicy1.txt"):
+            os.remove(CARPETA_SUBIDA+"/PrivacyPolicy1.txt")
+        file = open(CARPETA_URL+"/listaURL.txt", "w")
+        file.write(url)
+        file.close()
+    else:
+        respuesta = {
+                'estado': 'fallido',
+                'mesaje': 'No se logro crear el archivo con la URL'
+            }
+        return respuesta, 409
+    #Se envia el archivo txt a linux 
+    archivo.put(CARPETA_URL+"/listaURL.txt","/app/listaURL.txt")
+    #Se ejecuta el microservicio3 en linux
+    stdin, stdout, stderr = cliente.exec_command(
+        "cd /app ; echo s | rm -r result/* ; echo 4652 | sudo -S python3 micro3-g.py"
+        )
+    #Se espera el tiempo suficiente segun el numero de URLs
+    print("Descargando archivos, por favor espere...")
+    time.sleep(30)
+    resultado = stdout.read().decode()
+    print(resultado)
+    #Se guarda en una cadena los archivos descargados y se los cambia de nombre
+    entrada, salida, error = cliente.exec_command(
+        "cd /app; sh CambiarNombres.sh;cd /app/result; ls"
+        )
+    time.sleep(1)
+    res = salida.read().decode()
+    #Se filtran las cadenas que terminan en .txt
+    secuencia = r'\w*\.txt'
+    busqueda = re.findall(secuencia,res)
+    #Se descargan los archivos .txt
+    ruta = "/app/result/"
+    for i in busqueda:
+        path_origen = ruta + i
+        path_destino = CARPETA_SUBIDA+i
+        archivo.get(path_origen,path_destino)
+    #Se eliminan del servidor los archivos
+    entrada2, salida2, error2 = cliente.exec_command(
+    "cd /app;rm -rf result;mkdir result"
+    )
+    time.sleep(1)
+    archivo.close()
+    cliente.close()
+    politica = abrir_politica("PrivacyPolicy1.txt")
+    if os.path.exists(CARPETA_SUBIDA+"/PrivacyPolicy1.txt"):
+        respuesta = {
+                    'estado': 'exito',
+                    'url': url,
+                    'texto_politica': politica,
+                }
+        return respuesta, 201
+    else:
+        respuesta = {
+                'estado': 'fallido',
+                'mesaje': 'No se logro crear el archivo con la URL'
+            }
+        return respuesta, 409
+    
 
 #Se verifica si un archivo existe en la petición enviada desde el frontend
 def politica_existe_peticion():
@@ -40,7 +164,7 @@ def politica_existe_peticion():
 
 #luego de guardar la política se lee su archivo
 def abrir_politica(nombre_archivo):
-    with open(CARPETA_SUBIDA + nombre_archivo, 'r', encoding='utf-8') as txt:
+    with open(CARPETA_SUBIDA + nombre_archivo, 'r', encoding='UTF-8') as txt:
         politica = txt.read()
         return politica
 
@@ -51,6 +175,41 @@ def existe_archivo_politica_mismo_nombre(nombre_archivo):
             return True
     except:
         return False
+
+#Arregar saltos de linea
+def saltos_linea(nombre_archivo):
+    try:
+        documento = open(CARPETA_SUBIDA+"/"+nombre_archivo+".txt","rw")
+        lineas = documento.readlines()
+        num = 0
+        for i in lineas:
+            i.str.split("\n")
+        documento.close()
+        return num
+    except:
+        return "Error"
+
+#Cuenta las URLs de un archivo
+def conteoURLs(nombre_archivo):
+    try:
+        documento = open(CARPETA_URL+"/"+nombre_archivo)
+        lineas = documento.readlines()
+        num = 0
+        for i in lineas:
+            if i != '\n':
+                num = num+1
+        documento.close()
+        return num
+    except:
+        return "Error"
+
+#Renombra el archivo de URLS a uno estandar 
+def renombrarURLs(nombre_archivo):
+    if os.path.exists(CARPETA_URL+"/listaCompleta.txt"):
+        os.remove(CARPETA_URL+"/listaCompleta.txt")
+    nombre_viejo = CARPETA_URL+"/"+nombre_archivo
+    nombre_nuevo = CARPETA_URL+"/listaCompleta.txt"
+    os.rename(nombre_viejo, nombre_nuevo)
 
 #Separa los parrafos de una política de privacidad
 def separar_parrafos_principales(politica):
@@ -115,7 +274,6 @@ def llenar_politica_html(parrafos):
         parrafo_aux = ParrafoMostrar(titulo, texto, texto_html)
         politica_respuesta.parrafos.insert(i, parrafo_aux)
         i += 1
-
     return politica_respuesta
 
 
@@ -168,6 +326,7 @@ def previsualizar_politica():
                 'estado': 'exito',
                 'mensaje': 'politica creada',
                 'politica': marshal(json, PoliticaDto.politicaMostrar)
+                
             }
 
             return respuesta, 201
@@ -203,6 +362,33 @@ def previsualizar_politica():
         error_directorio()
 
 
+"""
+#Función previsualizacion de política David
+def previsualizar_politica():
+    documento = open(CARPETA_URL+"/listaURL.txt")
+    lineas = documento.readlines()
+    for i in lineas:
+        if i != '\n':
+            aux = i          
+    documento.close()
+    nombre_archivo = "/PrivacyPolicy1.txt"
+    politicaTexto = abrir_politica(nombre_archivo)
+    
+    
+    parrafos = separar_parrafos_principales(politica)
+    llenar_politica_mostrar()
+    json = llenar_politica_html(parrafos)
+    
+    borrar_politica_previsualizacion(CARPETA_SUBIDA+"/PrivacyPolicy1.txt")
+    respuesta = {
+                'estado': 'exito',
+                'mensaje': aux,
+                'politica': marshal(politicaTexto, PoliticaDto.politicaMostrar)
+            }
+    return respuesta, 201
+"""
+
+#Guarda una politica que ha sido ingresada manualmente   
 def guardar_politica():
     respuesta = request.form.to_dict()
     politica = Politica.query.filter_by(nombre=respuesta.get('nombre')).first()
@@ -266,6 +452,61 @@ def guardar_politica():
             'mensaje': 'El nombre de la politica ya existe'
         }
         return respuesta, 409
+
+#Guardar politica que ha sido extraido de forma automatica con URL
+def guardar_politica2():
+    respuesta = request.form.to_dict()
+    politica = Politica.query.filter_by(nombre=respuesta.get('nombre')).first()
+    if not politica:
+        fecha_aux = respuesta.get('fecha').split('T')[0]
+        nueva_politica = Politica(
+            nombre=respuesta.get('nombre'),
+            url=respuesta.get('url'),
+            fecha=fecha_aux,
+            asignada=False
+        )
+        guardar_cambios(nueva_politica)
+
+        # GUARDAR PARRAFOS
+        politica_texto = respuesta.get('texto')
+        nombre_politica = respuesta.get('nombre')
+        nombre_archivo = nombre_politica.strip().replace(" ", "")
+        nombre_archivo = secure_filename(nombre_archivo)
+        if existe_archivo_politica_mismo_nombre(nombre_archivo):
+            respuesta = {
+                'estado': 'fallido',
+                'mesaje': 'Existe un archivo con el mismo nombre'
+            }
+            return respuesta, 409
+        if crear_archivo(politica_texto, nombre_archivo):
+            nombre_archivo = nombre_archivo+".txt"
+            texto = abrir_politica(nombre_archivo)
+            parrafos = separar_parrafos_principales(texto)
+            politica_procesada = llenar_politica_html(parrafos)
+            i = 0
+            for parrafo in politica_procesada.parrafos:
+                parrafo_aux = ParrafoGuardar(i, parrafo.titulo, parrafo.texto, parrafo.texto_html,
+                                                nueva_politica.id)
+                guardar_parrafo(parrafo_aux)
+                i += 1
+            respuesta = {
+                    'estado': 'exito',
+                    'mesaje': 'Politica cargada con exito'
+                }
+            return respuesta, 201  
+        else:
+            respuesta = {
+            'estado': 'fallido',
+            'mensaje': 'No se ha podido crear el archivo'
+            }
+            return respuesta, 409  
+    else:
+        respuesta = {
+            'estado': 'fallido',
+            'mensaje': 'El nombre de la politica ya existe'
+        }
+        return respuesta, 409
+
 
 
 def editar_politica(data):
@@ -335,10 +576,244 @@ def actualizar_politica_asignada(data):
         }
         return respuesta, 201
 
+#Cuenta las URLS de un archivo
+def contar_urls(data):
+    """Cuenta URLs del archivo"""
+    archivo = request.files['politica']
+    if not politica_existe_peticion():
+        respuesta = {
+            'estado': 'fallido',
+            'mesaje': 'No existe el archivo en la peticion'
+        }
+        return respuesta, 409
+
+    if not archivo_permitido(archivo.filename):
+        respuesta = {
+            'estado': 'fallido',
+            'mesaje': 'Extension de archivo invalida'
+        }
+        return respuesta, 409
+    
+    nombre_archivo = secure_filename(archivo.filename)
+    archivo.save(os.path.join(CARPETA_URL, nombre_archivo))
+    num = conteoURLs(nombre_archivo)
+    if num != "Error":
+        respuesta = {
+                'estado': 'exito',
+                'mensaje': str(num),
+                
+            }
+        renombrarURLs(nombre_archivo)
+        return respuesta, 201
+    else:
+        respuesta = {
+                'estado': 'Fallido',
+                'mensaje': 'No se pudo contar las URLS',
+            }
+        return respuesta, 409
+
+
+#Genera reportes de politicas anotadas
+def generarReporte(data):
+    politicas_anotadas = []
+    for item in data['politicas']:
+        if(item['tipo_usuario']=='Consolidador'):
+            item['tipo_usuario']=1
+        else:
+            item['tipo_usuario']=0
+        consulta = (db.session.query(
+            Anotacion.id, Anotacion.fecha_anotado, Anotacion.ejecuta, Anotacion.texto,
+            Politica.id, Politica.nombre, Politica.url, 
+            Parrafo.id, Parrafo.texto,
+            Valor.id, Valor.descripcion,
+            Atributo.id, Atributo.descripcion,
+            Tratamiento.id, Atributo.descripcion)
+            .outerjoin(Parrafo, Parrafo.id == Anotacion.parrafo_id)
+            .outerjoin(Politica, Politica.id == Parrafo.politica_id)
+            .outerjoin(AnotacionValorRelacion, AnotacionValorRelacion.anotacion_id == Anotacion.id)
+            .outerjoin(Valor, Valor.id == AnotacionValorRelacion.valor_id)
+            .outerjoin(Atributo, Atributo.id == Valor.atributo_id)
+            .outerjoin(Tratamiento, Tratamiento.id == Atributo.tratamiento_id)
+            .filter(Politica.id == item['id_politica'],
+                    Anotacion.usuario_id == item['id_usuario'],
+                    Anotacion.consolidar == item['tipo_usuario']).all() )
+        if not consulta:
+            print('No hay datos')
+        else:
+            for items in consulta:
+                aux = ''
+                aux = PoliticaAnotadaReporte(items[4],items[5],items[6],items[7],items[8],
+                                                items[0],items[1],items[2],items[3],items[9],
+                                                items[10],items[11],items[12],items[13],items[14])
+                politicas_anotadas.append(aux)
+    fecha_actual = datetime.datetime.now()
+    aux2 = fecha_actual.strftime('%Y-%m-%d-%H-%M-%S')
+    if(data['formato'] == 'csv'):
+        nombre_archivo = "Reporte-"+aux2+".csv"
+        if os.path.exists(CARPETA_REPORTE+"/"+nombre_archivo):
+            os.remove(CARPETA_REPORTE+"/"+nombre_archivo)
+        with open(CARPETA_REPORTE+"/"+nombre_archivo,'w',newline='',encoding='utf-8') as csvfile:
+            writer = csv.DictWriter(csvfile,fieldnames=[
+                'politica_id', 'politica_nombre', 'url','parrafo_id','parrafo_texto','anotacion_id',
+                'fecha_anotado','permite','anotacion_texto','valor_id','valor','atributo_id','atributo',
+                'tratamiento_id','tratamiento'])
+            writer.writeheader()
+            for items in politicas_anotadas:
+                writer.writerow({
+                'politica_id':items.politica_id, 'politica_nombre':items.politica_nombre, 
+                'url':items.url,'parrafo_id':items.parrafo_id,'parrafo_texto':items.parrafo_texto,
+                'anotacion_id':items.anotacion_id,'fecha_anotado':items.fecha_anotado,'permite':items.permite,
+                'anotacion_texto':items.anotacion_texto,'valor_id':items.valor_id,'valor':items.valor,
+                'atributo_id':items.atributo_id,'atributo':items.atributo,'tratamiento_id':items.tratamiento_id,
+                'tratamiento':items.tratamiento}) 
+        reportes = open(CARPETA_REPORTE+"/"+nombre_archivo,'r')
+        respuesta = {
+                'estado': 'exito',
+                'mensaje': 'Se ha generado el reporte exitosamente',
+                'reporte': marshal(reportes, PoliticaDto.reporte)
+            }
+        return respuesta, 201
+    if(data['formato'] == 'yaml'):
+        obtenerPoliticas(politicas_anotadas, aux2)
+        respuesta = {
+                'estado': 'exito',
+                'mensaje': 'Se ha generado el reporte exitosamente',
+            }
+        return respuesta, 201     
+
+#Se obtiene la informacion para reporte en formato YAML
+#Politicas para YAML
+def obtenerPoliticas(politicasAnotadas, fecha):
+    data = {}
+    idPoliticas = []
+    i=1
+    for aux in politicasAnotadas:
+        if aux.politica_id not in idPoliticas:
+            idPoliticas.append(aux.politica_id)
+            data1 = { "policy_"+str(i) : {
+                        "policy_id": aux.politica_id,
+                        "policy_name" : aux.politica_nombre,
+                        "policy_type" : "TEST",
+                        "contains_synthetic": False,
+                        "segments" : obtenerParrafos(aux.politica_id,politicasAnotadas),
+                    }}
+            generar_yaml(data1, aux.politica_nombre, fecha)
+            #data.update(data1)
+            i=i+1
+    return data
+
+#Parrafo para YAML
+def obtenerParrafos(idPolitica,polticasAnotadas):
+    data = {}
+    idParrafo = []
+    i=1
+    for a in polticasAnotadas:
+        if a.parrafo_id not in idParrafo:
+            idParrafo.append(a.parrafo_id)
+            if(idPolitica == a.politica_id):
+                data1 = {
+                    "segments_"+str(i):{
+                        "segment_id" : a.parrafo_id,
+                        "segment_text" : a.parrafo_texto,
+                        "performed" : a.permite,   
+                        "sentences" : obtenerAnotaciones(a.politica_id,a.parrafo_id,polticasAnotadas)          
+                }}
+                data.update(data1)
+                i=i+1
+    return(data)
+
+#Anotaciones para YAML
+def obtenerAnotaciones(idPolitica,idParrafo,politicasAnotadas):
+    data = {}
+    i=1
+    for a in politicasAnotadas:
+        if(idPolitica == a.politica_id and idParrafo == a.parrafo_id):
+            data1 = {
+                "sentences_"+str(i):{
+                    "sentence_text": a.anotacion_texto,
+                    "practice_type": a.tratamiento,
+                    "practice_att": a.atributo,
+                    "practice_value": a.valor,
+            }}
+            data.update(data1)
+            i=i+1
+    return(data)
+
+def generar_yaml(data, nombre, fecha):
+    nombre_archivo = "Reporte-"+nombre+"-"+fecha+".yml"
+    if os.path.exists(CARPETA_REPORTE+"/"+nombre_archivo):
+        os.remove(CARPETA_REPORTE+"/"+nombre_archivo)
+    with open (CARPETA_REPORTE+"/"+nombre_archivo, 'w',encoding='utf-8') as f:
+        yaml.dump(data,f,default_flow_style=False)
+
+
 #Consulta todas las políticas de privacidad
 def consultar_politicas():
     politicas = Politica.query.all()
     return marshal(politicas, PoliticaDto.politicaConsultar), 201
+
+
+#Consulta todas las políticas de privacidad anotadas
+def consultar_politicas_anotadas(tipo):
+    #Tipo de politicas a consultar 
+    #0 --> No finalizadas
+    #1 --> Finalizadas
+    if(tipo=='0'):
+        finalizado = 0 
+    else:
+        finalizado = 1
+    return politicas_anotadas(finalizado)
+
+def politicas_anotadas(finalizado):
+    politicas_anotadas = []
+    consulta = (db.session.query(Politica.id,Usuario.id,Politica.nombre, Usuario.email, PoliticaUsuarioRelacion.consolidar)
+                .join(Politica, Politica.id == PoliticaUsuarioRelacion.politica_id)
+                .join(Usuario, Usuario.id == PoliticaUsuarioRelacion.usuario_id)
+                .filter(PoliticaUsuarioRelacion.finalizado == finalizado)
+                .order_by(Politica.nombre.asc())
+                .all()
+                )
+    if not consulta:
+        respuesta = {
+            'estado': 'fallido',
+            'mensaje': 'No existen politicas anotadas'
+        }
+        return respuesta, 409
+    else:       
+        for items in consulta:
+            if(items[4]==True):
+                tipo_usuario='Consolidador'
+            else:
+                tipo_usuario='Anotador'
+            fecha = consultar_fecha(items[0],items[1], items[4])
+            anotaciones = consultar_anotaciones(items[0],items[1], items[4])
+            aux = PoliticaAnotadaConsultar(items[0], items[1],items[2], items[3], tipo_usuario, fecha, anotaciones)
+            politicas_anotadas.append(aux)
+        return marshal(politicas_anotadas, PoliticaDto.politicaAnotadaConsultar), 201
+
+#Consulta la ultima fecha de anotacion de una politica
+def consultar_fecha(politica_id, usuario_id, tipo_usuario):
+    fecha = (db.session.query(Anotacion.fecha_anotado)
+                   .outerjoin(Parrafo, Anotacion.parrafo_id == Parrafo.id)
+                   .outerjoin(Politica, Politica.id == Parrafo.politica_id)
+                   .filter(Politica.id == politica_id, Anotacion.usuario_id == usuario_id, Anotacion.consolidar==tipo_usuario)
+                   .order_by(Anotacion.fecha_anotado)).first()
+    if not fecha:
+        fecha = None
+    else:
+        fecha = fecha[0]
+    return fecha
+
+#Consulta numero de anotacion de una politica
+def consultar_anotaciones(politica_id, usuario_id, tipo_usuario):
+    anotaciones = (db.session.query(Anotacion)
+                   .outerjoin(Parrafo, Anotacion.parrafo_id == Parrafo.id)
+                   .outerjoin(Usuario, Usuario.id == Anotacion.usuario_id)
+                   .filter(Parrafo.politica_id == politica_id, Anotacion.usuario_id == usuario_id, Anotacion.consolidar == tipo_usuario)
+                   .count())
+    if not anotaciones:
+        anotaciones = 0
+    return anotaciones
 
 #Consulta parrafos de una política
 def consultar_politica_parrafos(politica_id):

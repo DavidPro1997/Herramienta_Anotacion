@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PoliticaAnotarConsultar } from '../administracion/politica/politica';
-import { PoliticaService } from '../administracion/politica/politica.service';
+import { PoliticaAnotarConsultar } from '../administracion/politica/gestion/gestion';
+import { PoliticaService } from '../administracion/politica/gestion/gestion.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { VisualizarDetallesComponent } from './visualizar-detalles/visualizar-detalles.component';

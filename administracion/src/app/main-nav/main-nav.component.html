@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="( login$| async)">
-    <mat-toolbar class="fondo">Menu</mat-toolbar>
+    <mat-toolbar class="fondo">{{ 'menu_arbol.menu' | translate }}</mat-toolbar>
     <mat-nav-list>
       <app-tree-view [modulos]="modulosAux">
       </app-tree-view>
@@ -16,10 +16,24 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
   
-        <span>Herramienta de anotación</span>
+        <span>{{ 'menu_arbol.herramienta' | translate }}</span>
 
       </div>
+      
+      <div></div><div></div><div></div><div></div>
+      <div></div><div></div><div></div><div></div><div></div>
      
+      
+      <label>
+        <span>{{ 'menu_arbol.idioma' | translate }}  </span>
+        <label> </label>
+        <select #langSelect (change)="escogerIdioma(langSelect.value)">
+          <option *ngFor="let lang of langs"  [selected]="lang === ngSelect">
+            {{ lang }}
+          </option>
+        </select>
+      </label>
+
 
       <div>
         <span class="usuario">{{usuarioAux.email}}</span>

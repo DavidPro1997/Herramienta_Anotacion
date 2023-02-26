@@ -1,0 +1,346 @@
+{
+    "idiomas":{
+        "ingles": "English",
+        "espanol" : "Spanish"
+    },
+    "rol":{
+        "anotador" : "Annotator",
+        "admin" : "Administrator"
+    },
+    "botones":{
+        "guardar":"Save",
+        "cancelar" : "Cancel",
+        "siguiente" : "Next",
+        "extraer" : "Extract",
+        "nuevo" : "+New",
+        "cargar" : "Upload policy",
+        "ok" : "Ok" , 
+        "si" : "Yes",
+        "no" : "No",
+        "reporte": "Generate Report"
+    },
+    "home":{
+        "titulo": "Welcome to the annotation tool             ",
+        "descripcion": "This project aims to make privacy policies transparent for users, thanks for being a part of it. The following graphic provides a brief summary of how this tool works:                                                          ",
+        "proceso": "Annotation Process          "
+    },
+    "menu_arbol":{
+        "idioma": "Language  ",
+        "menu": "Menu",
+        "herramienta": "Annotation Tool",
+        "error": "There is an error exiting the tool"
+    },
+    "usuario":{
+        "titulo": "User Management",
+        "descripcion": "List, creation, deletion and edition of users.",
+        "filtro": "Filter user by email",
+        "error": "Failed to get users.",
+        "eliminar" : {
+            "confirmar" : "Are you sure to delete this user.\nRemember that this action cannot be reversed.",
+            "exito" : "User removed successfully!",
+            "error" : "ERROR deleting user!"
+        },
+        "tabla":{
+            "usu":"User",
+            "rol":"User Rol",
+            "activo":"Active",
+            "train":"Training",
+            "editar":"Edit",
+            "eliminar":"Delete"
+        },
+        "dialogo":{
+            "titulo1": "User Creation",
+            "titulo2": "User Edition",
+            "email": "User email",
+            "rol": "Choose user role:",
+            "train": "Training",
+            "activo" : "Active: ",
+            "error" : "The form contains empty fields"
+        }
+    },
+    "politica":{
+        "gestion":{
+            "titulo": "Privacy Policy Management",
+            "descripcion": "List, create, delete and edit privacy policies.",
+            "filtro": "Filter policy by name",
+            "error": "Unable to get privacy policies",
+            "conf_elimnar" : "Are you sure to delete this policy?\nRemember that this action cannot be reversed",
+            "tabla":{
+                "nombre":"Name",
+                "url":"URL",
+                "fecha":"Date",
+                "editar":"Edit",
+                "asignar":"Assign",
+                "eliminar":"Delete"
+            },
+            "dialogo":{
+                "titulo1": "Upload Privacy Policy",
+                "titulo2": "Privacy Policy Edition",
+                "nombre": "Policy name",
+                "error_nombre": "Enter a name",
+                "url": "URL where the policy was obtained",
+                "error_url": "Enter a URL",
+                "fecha" : "Date the policy was obtained",
+                "error_fecha": "Choose a date",
+                "archivo" : "Choose a file",
+                "exito_editar" : "Policy edited successfully!",
+                "error_formulario" : "The form contains errors, please correct it"
+            },
+            "asignar":{
+                "titulo": "Assigning users to policy",
+                "nombre": "Policy name",
+                "anotadores": "Assign annotators",
+                "exito_anotador" : "Annotator {{anotador}} successfully assigned!",
+                "exito_administrador" : "Administrator {{admin}} successfully assigned!",
+                "error_asignado" :"ERROR assigning' {{asignado}} to policy!",
+                "consolidador": "Assign Consolidator",
+                "error_anotador":"Select at least two annotators",
+                "error_consolidador":"Select an administrator to consolidate",
+                "error" : "Assigned policy error",
+                "exito": "Policy assigned successfully!",
+                "confirmar":"Are you sure to make the change?\nRemember that this cannot be edited in the future."
+            },
+            "previsualizacion":{
+                "titulo": "Privacy Policy of: ",
+                "fecha": "Date: ",
+                "url": "URL: ",
+                "exito":"Policy created successfully!",
+                "error":"Failed to create policy!"
+            }
+        },
+        "insertar" : {
+            "titulo": "Privacy Policy Text Extraction",
+            "descripcion": "Upload the file containing the urls to download:",
+            "ayuda": "Help",
+            "archivo": "Choose a file",
+            "extraer": "Extract",
+            "espere" :"Please wait while the text is downloaded. Take no action",
+            "notf_extraer" : "The text of the URL has been extracted",
+            "notf_error_extraer" : "An error occurred with the download, check the URL",
+            "no_url": "There are no more URLs",
+            "num_url" : "File contains {{num}} URLs",
+            "error_archivo":"The file could not be processed.",
+            "help1":{
+                "titulo":"Information",
+                "subtitulo" : "Privacy Policy",
+                "descripcion" : "Steps to insert privacy policies automatically.",
+                "lista" : {
+                    "1" : "1. Create a text file in .txt format.",
+                    "2" : "2. Add as many URLs as you think are necessary, separated by an enter, as in the example:",
+                    "2_1" : "https://www.example_1.com",
+                    "2_2" : "https://www.example_2.com",
+                    "2_3" : "https://www.example_3.com",
+                    "2_k" : "........................",
+                    "2_n" : "https://www.example_n.com",
+                    "3" : "3. Load the text file.",
+                    "4" : "4. Fill in the necessary information for the privacy policy.",
+                    "5" : "5. Save the text with the save button.",
+                    "6" : "6. Repeat from step 4, if your file has more than one URL."
+                }
+            },
+            "help2":{
+                "titulo":"Privacy Policy Format",
+                "descripcion" : "How to format a privacy policy correctly",
+                "indicacion" : "To format the text present in the privacy policy, the following representations must be used: To indicate a title, the + character is used, and to indicate a new section, two line breaks. For better understanding, see the example below:"
+            },
+            "dialogo":{
+                "titulo":"Insert privacy policy",
+                "texto" : "Privacy policy text",
+                "error_contenido" : "You have to enter a text",
+                "exito" : "Policy created successfully!"
+            },
+            "confirmacion":{
+                "titulo":"Confirmation",
+                "1":"Are you sure you want to cancel?",
+                "2" : "Are you sure you want to save this policy?",
+                "3" : "You haven't saved the policy yet. Are you sure you want to move on to the next one?"
+            }
+        }
+    },
+    "tratamiento":{
+        "titulo" : "Treatment management",
+        "descripcion" : "List, creation and edition of treatments.",
+        "filtro": "Filter policy by description",
+        "error": "Could not get the treatments",
+        "eliminar" : {
+            "confirmar" : "Are you sure to delete this treatment?\nRemember that this action cannot be reversed.",
+            "exito" : "Treatment successfully removed!",
+            "error" : "ERROR removing treatment!"
+        },
+        "tabla" : {
+            "desc": "Description",
+            "color" : "Color",
+            "editar" : "Edit",
+            "eliminar": "Delete"
+        },
+        "dialogo" : {
+            "titulo1": "Treatment Creation",
+            "titulo2": "Treatment Edition",
+            "nombre" : "Name of the treatment",
+            "color" : "Treatment color",
+            "dialogo" : {
+                "titulo" : "Choose a color",
+                "escogido" : "Chosen color",
+                "exito":"Treatment created successfully!",
+                "error":"Error creating treatment!",
+                "error_form":"The form contains errors.\nPlease check it",
+                "exito_editar":"Treatment edited successfully!",
+                "error_editar":"Error editing treatment!"
+            }
+        }
+    },
+    "atributo":{
+        "titulo":"Attribute management",
+        "descripcion" : "List, create, delete and edit attributes.",
+        "tratamiento": "Choose a data treatment",
+        "ninguno":"None",
+        "eliminar" : {
+            "confirmar" : "Are you sure to remove this attribute?\nNote that this action cannot be reversed.",
+            "exito" : "Attribute removed successfully!",
+            "error" : "ERROR removing attribute!"
+        },
+        "tabla" : {
+            "desc": "Description",
+            "color" : "Color",
+            "editar" : "Edit",
+            "eliminar": "Delete"
+        },
+        "dialogo" : {
+            "titulo1": "Creation of attributes",
+            "titulo2": "Edit attribute",
+            "nombre" : "Attribute name",
+            "exito":"Attribute created successfully!",
+            "error":"Error creating attribute!",
+            "error_form":"The form contains errors.\nPlease check it",
+            "exito_editar":"Attribute edited successfully!",
+            "error_editar":"Error editing the attribute!"
+        }
+    },
+    "valor":{
+        "titulo":"Value management",
+        "descripcion" : "List, create, delete and edit of values.",
+        "tratamiento": "Choose a data treatment",
+        "atributo" : "Choose a treatment attribute",
+        "ninguno":"None",
+        "eliminar" : {
+            "confirmar" : "Are you sure to remove this value?\nNote that this action cannot be reversed.",
+            "exito" : "Value removed successfully!",
+            "error" : "ERROR removing value!"
+        },
+        "tabla" : {
+            "desc": "Description",
+            "color" : "Color",
+            "editar" : "Edit",
+            "eliminar": "Delete"
+        },
+        "dialogo" : {
+            "titulo1": "Value Creation",
+            "titulo2": "Edit value",
+            "nombre" : "Name of the value",
+            "exito":"Value created successfully!",
+            "error":"Error creating value!",
+            "error_form":"The form contains errors.\nPlease check it",
+            "exito_editar":"Value edited successfully!",
+            "error_editar":"Error editing value!"
+        }
+    },
+    "reporte":{
+        "titulo":"Reports",
+        "descripcion" : "Generation of annotated privacy policy reports.",
+        "exito": "The report was created successfully!",
+        "politica": "Choose the type of annotated policies",
+        "error_politica": "Could not get privacy policies",
+        "tipo":{
+            "finalizadas" : "Finished",
+            "no_finalizadas" : "Not Finished"
+        },
+        "formato" : "Choose a format for the report",
+        "ninguno":"None",
+        "filtro" :"Filter policy by name",
+        "error_escoger" : "Choose at least one annotated policy that has a number of annotations greater than zero",
+        "tabla" : {
+            "nombre": "Policy name",
+            "usuario" : "User",
+            "tipo" : "User Type",
+            "fecha": "Date of the last annotation",
+            "numero" : "Number of annotations",
+            "escoger" : "Choose"
+        } 
+    },
+    "consolidar": {
+        "titulo": "Privacy policies to consolidate",
+        "descripcion" : "List of privacy policies assigned to consolidate.",
+        "no_hay" : "At the moment there are no privacy policies to consolidate",
+        "tabla": {
+            "nombre" : "Policies assigned by coding",
+            "progreso" : "Progress",
+            "detalles" : "Details"
+        },
+        "detalles" : {
+            "titulo" : "Privacy Policy Details",
+            "nombre" : "Nombre:",
+            "coeficiente" : "Interscorer Coefficient:",
+            "tabla": {
+                "anotador" : "Annotator name",
+                "anotaciones" : "Number of Annotations"
+            }
+        },
+        "dialogo":{
+            "comentario" : "Comment:",
+            "ejecuta": "Execute",
+            "no_ejecuta" : "Not Execute",
+            "inconsistencia": "INCONSISTENT ANNOTATIONS",
+            "consistencia": "CONSISTENT ANNOTATIONS",
+            "confirmar": "You have finished annotating this policy, do you want to finish it?\nOnce finished it cannot be modified",
+            "advertencia" : "IT IS NECESSARY TO SELECT AT LEAST ONE DATA PROCESSING",
+            "anotacion_exito":"Annotation created successfully!",
+            "anotacion_error" : "ERROR creating the annotation!",
+            "exito": "Policy completed successfully!",
+            "error": "ERROR terminating policy!",
+            "texto" : "No text selected",
+            "duplicado" : "Successful duplicate annotation!",
+            "no_anotacion": "This section does not contain annotations",
+            "anotacion" : "Annotation:"
+        }
+    },
+    "anotar": {
+        "titulo": "Annotate Privacy Policies",
+        "descripcion" : "List of privacy policies assigned to annotate.",
+        "no_hay" : "At the moment there are no privacy policies to be annotated",
+        "tabla": {
+            "nombre" : "Assigned policies to annotate",
+            "progreso" : "Progress"
+        },
+        "dialogo":{
+            "comentario" : "Comment:",
+            "comentario1" : "Write a comment:",
+            "comentario2": "Ex. Please explain how the data is collected.",
+            "ejecuta": "Execute",
+            "no_ejecuta" : "Not Execute",
+            "codificar": "This paragraph has been encoded without any annotation.",
+            "inconsistencia": "INCONSISTENCY",
+            "inconsistencia_mensaje": "The following treatment(s) is(are) inconsistent(s):",
+            "sugerencia1": "For this paragraph the following treatments are suggested:",
+            "sugerencia2": "Consider not checking any values and continue to the next paragraph.",
+            "mensaje_guardar" : "Do you still want to save this annotation?",
+            "accion" : "Under the action of:",
+            "confirmar": "You have finished annotating this policy, do you want to finish it?\nOnce finished it cannot be modified",
+            "advertencia" : "IT IS NECESSARY TO SELECT AT LEAST ONE DATA PROCESSING",
+            "anotacion_exito":"Annotation created successfully!",
+            "anotacion_error" : "ERROR creating the annotation!",
+            "editar_exito":"Annotation edited successfully!",
+            "editar_error" : "ERROR editing annotation!",
+            "exito": "Policy completed successfully!",
+            "error": "ERROR terminating policy!",
+            "seccion" : "Select a section of text!",
+            "texto" : "SELECTED TEXT:",
+            "anotacion" : "Annotation:",
+            "editar" : "Edit annotation",
+            "eliminar" : "Delete annotation",
+            "resumen" : "Summary of the annotations made",
+            "confirmar_eliminar":"Are you sure to delete this annotation?\nThis action cannot be reversed",
+            "exito_eliminar":"Annotation successfully deleted!",
+            "error_eliminar":"ERROR deleting the annotation!"
+        }
+    }
+}

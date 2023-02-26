@@ -4,6 +4,7 @@ import { UsuarioService } from './usuario.service'
 import { MatDialog, MatSnackBar, MatSnackBarConfig, MatTableDataSource } from '@angular/material';
 import { UsuarioDialogoComponent } from './usuario-dialogo/usuario-dialogo.component';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-usuario',
@@ -27,6 +28,7 @@ export class UsuarioComponent {
     private _usuarioService: UsuarioService,
     private _dialogo : MatDialog,
     private _notificacion : MatSnackBar,
+    private translate: TranslateService
 
   ) { this.consultarUsuarios()}
 
@@ -61,14 +63,27 @@ export class UsuarioComponent {
   }
 
   eliminarUsuario(usuarioId: number) {
-    if (confirm("Esta seguro de eliminar este usuario?" +
-      "\nRecuerde que esta accion no podrá revertirse")) {
+    let nota = '';
+    this.translate.stream("usuario.eliminar.confirmar").subscribe((res: string)=>{
+      nota = res;
+    }); 
+    if (confirm(nota)) {
       this._usuarioService.eliminarUsuario(usuarioId).subscribe(
         () => {
-          this.notificacion('Usuario eliminado con exito!', 'exito-snackbar')
+          let aux = '';
+          this.translate.stream("usuario.eliminar.exito").subscribe((res: string)=>{
+            aux = res;
+          });
+          this.notificacion(aux, 'exito-snackbar')
           this.consultarUsuarios()
         },
-        () => this.notificacion('ERROR al eliminar usuario!', 'fracaso-snackbar')
+        () => {
+          let aux = '';
+          this.translate.stream("usuario.eliminar.error").subscribe((res: string)=>{
+            aux = res;
+          });
+          this.notificacion(aux, 'fracaso-snackbar')
+        }
       )
     }
 
@@ -78,7 +93,11 @@ export class UsuarioComponent {
     this._usuarioService.obtenerUsuarios().subscribe(
       resultado => this.dataSource = new MatTableDataSource(resultado),
       error => {
-        this.notificacion("No ha sido posible obtener los usuarios", "fracaso-snackbar", 4000);
+        let aux = '';
+          this.translate.stream("usuario.error").subscribe((res: string)=>{
+            aux = res;
+          });
+        this.notificacion(aux, "fracaso-snackbar", 4000);
       }
     )
   }

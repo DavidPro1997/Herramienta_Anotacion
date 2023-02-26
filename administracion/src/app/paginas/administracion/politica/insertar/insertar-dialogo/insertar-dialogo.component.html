@@ -1,0 +1,67 @@
+<div>
+    <mat-toolbar class="standar">
+        <span style="width: 100%;text-align: center;">{{ 'politica.insertar.dialogo.titulo' | translate }}</span>
+        <button mat-raised-button class="standar" style="height: 35px; color: white"
+            (click)="mostrarAyuda(false)">
+            <mat-icon>help</mat-icon>
+        </button>
+    </mat-toolbar>
+    <mat-card>
+        <mat-card-content>
+            <mat-dialog-content [formGroup]="formulario">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>{{ 'politica.gestion.dialogo.nombre' | translate }}</mat-label>
+                    <input id="nombrePolitica" type="text" matInput 
+                    placeholder="{{ 'politica.gestion.dialogo.nombre' | translate }}"
+                        formControlName="nombre" value={{politicaAux.nombre}} required>
+                    <mat-error *ngIf="nombre.invalid">{{errorNombre()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>{{ 'politica.gestion.dialogo.url' | translate }}</mat-label>
+                    <input id="urlPolitica" matInput placeholder="{{ 'politica.gestion.dialogo.url' | translate }}" 
+                    formControlName="url" value={{politicaAux.url}} required readonly>
+                    <mat-error *ngIf="url.invalid">{{errorUrl()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>{{ 'politica.gestion.dialogo.fecha' | translate }}</mat-label>
+                    <input id="fechaPolitica" matInput 
+                        [matDatepicker]="picker" 
+                        placeholder="{{ 'politica.gestion.dialogo.fecha' | translate }}"
+                        formControlName="fecha"
+                        required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="url.invalid">{{errorFecha()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="outline"> 
+                    <mat-label>{{ 'politica.insertar.dialogo.texto' | translate }}</mat-label>
+                    <textarea id="politicaTexto" style="height: 200px;" matInput 
+                    placeholder = "{{ 'politica.insertar.dialogo.texto' | translate }}"></textarea>
+                    <mat-error *ngIf="aux">{{errorContenido()}}</mat-error> 
+                </mat-form-field>        
+                <mat-grid-list cols="12" rowHeight="40px">                   
+                    <mat-grid-tile [colspan]="2" [rowspan]="1">
+                        <button mat-raised-button color="warn" Height="40px" (click)="mostrarConfirmacion(0)">
+                            <mat-icon>cancel</mat-icon>
+                            {{ 'botones.cancelar' | translate }}
+                        </button>
+                    </mat-grid-tile>                    
+                    <mat-grid-tile [colspan]="2" [rowspan]="1" >
+                        <button mat-raised-button color="accent" Height="40px" (click)="mostrarConfirmacion(1)">
+                            <mat-icon>save</mat-icon>
+                            {{ 'botones.guardar' | translate }}
+                        </button>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="5" [rowspan]="1" ></mat-grid-tile>                    
+                    <mat-grid-tile [colspan]="3" [rowspan]="1" >
+                        <button mat-raised-button class="standar" Height="40px" (click)="mostrarConfirmacion(2)">
+                            <mat-icon>arrow_forward</mat-icon>
+                            {{ 'botones.siguiente' | translate }}
+                        </button>
+                        <input type="file" accept=".txt" >
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-dialog-content>
+        </mat-card-content>
+    </mat-card>  
+</div>

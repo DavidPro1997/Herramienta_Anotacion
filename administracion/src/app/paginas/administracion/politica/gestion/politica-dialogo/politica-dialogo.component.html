@@ -7,24 +7,24 @@
         <mat-card-content>
             <mat-dialog-content [formGroup]="formulario">
                 <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Nombre de la politica</mat-label>
-                    <input id="nombrePolitica" type="text" matInput placeholder="Nombre de la politica"
+                    <mat-label>{{ 'politica.gestion.dialogo.nombre' | translate }}</mat-label>
+                    <input id="nombrePolitica" type="text" matInput placeholder="{{ 'politica.gestion.dialogo.nombre' | translate }}"
                         formControlName="nombre" value={{politicaAux.nombre}} required>
                     <mat-error *ngIf="nombre.invalid">{{errorNombre()}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>URL donde se obtuvo la politica</mat-label>
-                    <input id="urlPolitica" matInput placeholder="URL de politica" formControlName="url"
+                    <mat-label>{{ 'politica.gestion.dialogo.url' | translate }}</mat-label>
+                    <input id="urlPolitica" matInput placeholder="{{ 'politica.gestion.dialogo.url' | translate }}" formControlName="url"
                         value={{politicaAux.url}} required>
                     <mat-error *ngIf="url.invalid">{{errorUrl()}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Fecha en la que se obtuvo la politica</mat-label>
+                    <mat-label>{{ 'politica.gestion.dialogo.fecha' | translate }}</mat-label>
                     <input id="fechaPolitica" matInput 
                         [matDatepicker]="picker" 
-                        placeholder="Escoja una fecha"
+                        placeholder="{{ 'politica.gestion.dialogo.fecha' | translate }}"
                         formControlName="fecha"
                         required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -37,8 +37,8 @@
 
                     <mat-grid-tile [colspan]="8" [rowspan]="1" style="padding-left: 15px;">
                         <mat-form-field class="example-full-width" style="height: 40px;">
-                            <mat-label>Escoja un archivo</mat-label>
-                            <input id="nombreArchivo" matInput placeholder="Nombre del archivo" value={{nombreArchivo}}>
+                            <mat-label>{{ 'politica.gestion.dialogo.archivo' | translate }}</mat-label>
+                            <input id="nombreArchivo" matInput placeholder="{{ 'politica.gestion.dialogo.archivo' | translate }}" value={{nombreArchivo}}>
                         </mat-form-field>
                     </mat-grid-tile>
                     
@@ -61,7 +61,7 @@
                         </mat-grid-tile>
                         <mat-grid-tile [colspan]="2" [rowspan]="1">
                             <button (click)="guardarEditar()" class="standar" mat-button>
-                                Guardar
+                                {{ 'botones.guardar' | translate }}
                                 <mat-icon>save</mat-icon>
                             </button>
                         </mat-grid-tile>
@@ -81,7 +81,7 @@
             <mat-card-actions *ngIf="archivoEscogido">
                 <mat-grid-tile [colspan]="2" [rowspan]="1">
                     <button (click)="previsualizarPolitica()" class="standar" mat-button>
-                        Cargar Politica
+                        {{ 'botones.cargar' | translate }}
                         <mat-icon>save</mat-icon>
                     </button>
                 </mat-grid-tile>

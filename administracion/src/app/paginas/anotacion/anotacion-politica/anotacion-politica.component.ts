@@ -11,6 +11,8 @@ import { UsuarioService } from '../../administracion/usuario/usuario.service';
 import { NotificacionIncosistenciaComponent } from '../notificacion-incosistencia/notificacion-incosistencia.component';
 import { TreeViewCheckService } from '../tree-view-tratamientos/tree-view-tratamientos.service';
 import { UsuarioConsultar } from '../../administracion/usuario/usuario';
+import {TranslateService} from "@ngx-translate/core";
+
 
 export class NodoSeleccionado {
   id: number;
@@ -44,7 +46,8 @@ export class AnotacionPoliticaComponent {
     private _treeViewService: TreeViewCheckService,
     private _usuarioService: UsuarioService,
     private _dialogo: MatDialog,
-    private _notificacion: MatSnackBar
+    private _notificacion: MatSnackBar,
+    private translate: TranslateService
   ) {
     this.politicaId = this._router.getCurrentNavigation().extras.state.politica_id;
 
@@ -89,7 +92,11 @@ export class AnotacionPoliticaComponent {
   guardarAnotacion() {
     this.valores = [];
     if (this.listaValores.length == 0) {
-      alert("ES NECESARIO SELECCIONAR AL MENOS UN TRATAMIENTO DE DATOS")
+      let mensaje = '';
+      this.translate.stream("anotar.dialogo.advertencia").subscribe((res: string)=>{
+        mensaje = res;
+      });
+      alert(mensaje)
     } else {
       this.listaValores.forEach(
         valor => {
@@ -141,7 +148,13 @@ export class AnotacionPoliticaComponent {
             this.enviarAnotacion(anotacion)
           }
         },
-        () => this.notificacion("ERROR creando anotacion!", "fracaso-snackbar")
+        () => {
+          let nota = '';
+          this.translate.stream("anotar.dialogo.anotacion_error").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "fracaso-snackbar")
+        }
       )
     };
   }
@@ -149,7 +162,11 @@ export class AnotacionPoliticaComponent {
   enviarAnotacion(anotacion: Anotacion) {
     this._anotacionService.guardarAnotacion(anotacion).subscribe(
       () => {
-        this.notificacion("Anotacion creada con exito!", "exito-snackbar")
+        let nota = '';
+          this.translate.stream("anotar.dialogo.anotacion_exito").subscribe((res: string)=>{
+            nota = res;
+          });
+        this.notificacion(nota, "exito-snackbar")
         setTimeout(
           () => {
             //Simular un cambio de parrafo y limpiar todos los campos
@@ -161,7 +178,13 @@ export class AnotacionPoliticaComponent {
           1000
         )
       },
-      () => this.notificacion("ERROR creando anotacion!", "fracaso-snackbar")
+      () => {
+        let nota = '';
+          this.translate.stream("anotar.dialogo.anotacion_error").subscribe((res: string)=>{
+            nota = res;
+          });
+        this.notificacion(nota, "fracaso-snackbar")
+      }
     )
   }
 

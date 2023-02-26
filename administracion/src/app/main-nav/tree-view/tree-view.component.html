@@ -7,7 +7,7 @@
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding class=fondo>
-        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toogle ' + node.nombre">
+        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toogle ' + node.nombre">
             <mat-icon class="mat-icon-rtl-mirror" >
                 {{treeControl.isExpanded(node) ? node.icono :  node.icono}}
             </mat-icon>
@@ -20,4 +20,6 @@
             </mat-icon>
         </button>
     </mat-tree-node>
+
+    
 </mat-tree>

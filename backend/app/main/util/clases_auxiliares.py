@@ -142,6 +142,37 @@ class AnotacionConsultar:
         self.usuario_nombre = usuario_nombre
 
 
+class PoliticaAnotadaConsultar:
+    def __init__(self,id_politica, id_usuario, nombre, usuario, tipo_usuario, fecha, anotaciones):
+        self.id_politica = id_politica
+        self.nombre = nombre
+        self.id_usuario = id_usuario
+        self.usuario = usuario
+        self.tipo_usuario = tipo_usuario
+        self.fecha = fecha
+        self.anotaciones = anotaciones
+
+
+class PoliticaAnotadaReporte:
+    def __init__(self,politica_id,politica_nombre,url,parrafo_id,parrafo_texto,anotacion_id,fecha_anotado,
+                permite,anotacion_texto,valor_id,valor,atributo_id,atributo,tratamiento_id,tratamiento):
+        self.politica_id = politica_id
+        self.politica_nombre = politica_nombre
+        self.url = url
+        self.parrafo_id = parrafo_id
+        self.parrafo_texto = parrafo_texto
+        self.anotacion_id = anotacion_id
+        self.fecha_anotado = fecha_anotado
+        self.permite = permite
+        self.anotacion_texto = anotacion_texto
+        self.valor_id = valor_id
+        self.valor = valor
+        self.atributo_id = atributo_id
+        self.atributo = atributo
+        self.tratamiento_id = tratamiento_id
+        self.tratamiento = tratamiento
+
+
 class AnotacionValor:
     def __init__(self, valor_id = 0, valor_descripcion ='', atributo_descripcion='', tratamiento_descripcion='',
                  color_primario =''):

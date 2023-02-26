@@ -1,10 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { RespuestaPoliticaVisualizar, PoliticaGuardar } from '../politica'
+import { RespuestaPoliticaVisualizar, PoliticaGuardar } from '../gestion'
 import { DOCUMENT } from '@angular/common';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { PoliticaService } from '../politica.service';
+import { PoliticaService } from '../gestion.service';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-previsualizacion',
@@ -28,7 +30,8 @@ export class PrevisualizacionComponent implements OnInit {
     @Inject(DOCUMENT) private documento : Document,
     private _politicaService : PoliticaService,
     private _notificacion : MatSnackBar,
-    private _fb : FormBuilder
+    private _fb : FormBuilder,
+    private translate: TranslateService
   ) {
     //dialogo.disableClose = true; 
     this.politicaVisualizar = data.politicaVisualizar;
@@ -55,10 +58,21 @@ export class PrevisualizacionComponent implements OnInit {
 
     this._politicaService.guardarPolitica(this.politicaGuardar,this.archivoPolitica).subscribe(
       ()=> {
-        this.notificacion('Politica creada con exito!','exito-snackbar')
+        let mensaje = '';
+          this.translate.stream("politica.gestion.previsualizacion.exito").subscribe((res: string)=>{
+            mensaje = res;
+          });
+        this.notificacion(mensaje,'exito-snackbar')
         this._dialogo.close(this.formulario.value)
       },
-      error => this.notificacion('La politica no pudo ser creada','fracaso-snackbar')
+      error => {
+        let mensaje = '';
+          this.translate.stream("politica.gestion.previsualizacion.error").subscribe((res: string)=>{
+            mensaje = res;
+          });
+        this.notificacion(mensaje,'fracaso-snackbar')
+
+      }
     )
   }
 

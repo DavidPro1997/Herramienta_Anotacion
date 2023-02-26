@@ -183,20 +183,42 @@ def upgrade():
         [
             {'id': 1, 'codigo': '#000000', 'disponible': True},
             {'id': 2, 'codigo': '#ffffff', 'disponible': True},
+            {'id': 3, 'codigo': '#ff0000', 'disponible': True},
+            {'id': 4, 'codigo': '#32ff00', 'disponible': True},
+            {'id': 5, 'codigo': '#f3ff00', 'disponible': True},
         ]
     )
 
     op.bulk_insert(modulo_table,
-        [
+    #Español
+        #[
+        #    {'id': 1,'nombre':'raiz','icono':'','path': None,'padre_id': None},
+        #    {'id': 2,'nombre':'Administracion','icono':'build','path': None,'padre_id':'1'},
+        #    {'id': 3,'nombre':'Consolidacion','icono':'book','path':'/paginas/consolidacion','padre_id':'1'},
+        #    {'id': 4,'nombre':'Anotacion','icono':'create','path':'/paginas/anotacion','padre_id':'1'},
+        #    {'id': 5,'nombre':'Usuarios','icono':'account_circle','path':'/paginas/administracion/usuarios','padre_id':'2'},
+        #    {'id': 6,'nombre':'Politicas','icono':'menu_book','path': None,'padre_id':'2'},
+        #    {'id': 7,'nombre':'Tratamientos','icono':'highlight','path':'/paginas/administracion/tratamientos','padre_id':'2'},
+        #    {'id': 9,'nombre':'Atributos','icono':'format_list_bulleted','path':'/paginas/administracion/atributos','padre_id':'2'},
+        #    {'id': 10,'nombre':'Valores','icono':'format_list_numbered','path':'/paginas/administracion/valores','padre_id':'2'},
+        #    {'id': 11,'nombre':'Reportes','icono':'insert_drive_file','path':'/paginas/administracion/reportes','padre_id':'2'},      
+        #    {'id': 12,'nombre':'Gestion','icono':'create','path':'/paginas/administracion/politicas/gestion','padre_id':'6'},
+        #    {'id': 13,'nombre':'Insertar','icono':'note_add','path':'/paginas/administracion/politicas/insertar','padre_id':'6'},      
+        #]
+    #Ingles
+    [
             {'id': 1,'nombre':'raiz','icono':'','path': None,'padre_id': None},
-            {'id': 2,'nombre':'Administracion','icono':'build','path': None,'padre_id':'1'},
-            {'id': 3,'nombre':'Consolidacion','icono':'book','path':'/paginas/consolidacion','padre_id':'1'},
-            {'id': 4,'nombre':'Anotacion','icono':'create','path':'/paginas/anotacion','padre_id':'1'},
-            {'id': 5,'nombre':'Usuarios','icono':'account_circle','path':'/paginas/administracion/usuarios','padre_id':'2'},
-            {'id': 6,'nombre':'Politicas','icono':'menu_book','path':'/paginas/administracion/politicas','padre_id':'2'},
-            {'id': 7,'nombre':'Tratamientos','icono':'highlight','path':'/paginas/administracion/tratamientos','padre_id':'2'},
-            {'id': 9,'nombre':'Atributos','icono':'format_list_bulleted','path':'/paginas/administracion/atributos','padre_id':'2'},
-            {'id': 10,'nombre':'Valores','icono':'format_list_numbered','path':'/paginas/administracion/valores','padre_id':'2'}
+            {'id': 2,'nombre':'Administration','icono':'build','path': None,'padre_id':'1'},
+            {'id': 3,'nombre':'Consolidation','icono':'book','path':'/paginas/consolidacion','padre_id':'1'},
+            {'id': 4,'nombre':'Annotation','icono':'create','path':'/paginas/anotacion','padre_id':'1'},
+            {'id': 5,'nombre':'Users','icono':'account_circle','path':'/paginas/administracion/usuarios','padre_id':'2'},
+            {'id': 6,'nombre':'Policies','icono':'menu_book','path': None,'padre_id':'2'},
+            {'id': 7,'nombre':'Treatments','icono':'highlight','path':'/paginas/administracion/tratamientos','padre_id':'2'},
+            {'id': 9,'nombre':'Attributes','icono':'format_list_bulleted','path':'/paginas/administracion/atributos','padre_id':'2'},
+            {'id': 10,'nombre':'Values','icono':'format_list_numbered','path':'/paginas/administracion/valores','padre_id':'2'},
+            {'id': 11,'nombre':'Reports','icono':'insert_drive_file','path':'/paginas/administracion/reportes','padre_id':'2'},      
+            {'id': 12,'nombre':'Manual','icono':'create','path':'/paginas/administracion/politicas/gestion','padre_id':'6'},
+            {'id': 13,'nombre':'Automatic','icono':'note_add','path':'/paginas/administracion/politicas/insertar','padre_id':'6'},      
         ]
     )
 
@@ -223,7 +245,16 @@ def upgrade():
                 'email':'admin@gmail.com',
                 'hora_registro': datetime.now(),
                 'rol_usuario': 1,
-                'clave_hash': '$2b$12$gJM9bfraOtvHSPT3FVby/OQyC2FlVWaG/goYIDujTDLEELJoVkwfu',
+                'clave_hash': '$2a$12$dTBcDZwr1cFV4yDO.w2yH./HX99QsKO93LjaMlrEZT.rWeepOBT2K',
+                'activo': True,
+                'entrenamiento': False
+            },
+            {
+                'id': 2,
+                'email':'anotador@gmail.com',
+                'hora_registro': datetime.now(),
+                'rol_usuario': 2,
+                'clave_hash': '$2a$12$5wGiZs/IpMZsOq/ujcwzK.uYyKH2S8dcOZU/JK4KeZDfibiVSDSQK',
                 'activo': True,
                 'entrenamiento': False
             }

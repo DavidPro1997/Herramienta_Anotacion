@@ -1,0 +1,124 @@
+<mat-card class="mat-elevation-z8 card" style="background-color: #fafafa ;">  
+    <mat-grid-list cols="4" rowHeight="40px">
+        <mat-grid-tile [colspan]="3" [rowspan]="1">
+            <mat-card-title style="width: 100%">{{ 'reporte.titulo' | translate }}</mat-card-title>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="1">
+            <mat-card-subtitle style="width: 100%"> {{ 'reporte.descripcion' | translate }}
+            </mat-card-subtitle>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2"></mat-grid-tile>
+    </mat-grid-list>  
+    <mat-dialog-content [formGroup]="reporteFormulario"> 
+      <mat-grid-list cols="6" rowHeight="40px" [ngStyle]="{'background-color': '#fafafa'}">
+        <mat-grid-tile [colspan]="1" [rowspan]="2">
+        </mat-grid-tile>  
+        <mat-grid-tile [colspan]="4" [rowspan]="2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>{{ 'reporte.politica' | translate }}</mat-label>
+            <mat-select [(value)]="tipo2"  formControlName="tipo">
+              <mat-option style="color: black; font-weight: bold;">
+                {{ 'reporte.ninguno' | translate }}
+              </mat-option>
+              <mat-option value="finalizadas" (click)="desplegarPoliticasAnotadas(tipo2)">
+                {{ 'reporte.tipo.finalizadas' | translate }}
+              </mat-option>
+              <mat-option value="noFinalizadas" (click)="desplegarPoliticasAnotadas(tipo2)">
+                {{ 'reporte.tipo.no_finalizadas' | translate }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formato.invalid">{{errorTipo()}}</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="2">
+        </mat-grid-tile>
+      </mat-grid-list>
+        <mat-card-content style="height: 75vh; overflow-y: auto; overflow-x: hidden;">
+            <mat-form-field  style="min-width: 210px;">
+                <input matInput (keyup)="aplicarFiltro($event.target.value)" 
+                placeholder="{{ 'reporte.filtro' | translate }}">
+            </mat-form-field>
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%">
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef> # </th>
+                      <td mat-cell *matCellDef="let politica; let indice = index"> {{indice+1}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="nombre" >
+                      <th mat-header-cell *matHeaderCellDef> {{ 'reporte.tabla.nombre' | translate }}</th>
+                      <td mat-cell *matCellDef="let politica">
+                          {{politica.nombre}}
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="usuario">
+                      <th mat-header-cell *matHeaderCellDef> {{ 'reporte.tabla.usuario' | translate }} </th>
+                      <td mat-cell *matCellDef="let politica">
+                          {{politica.usuario}}
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="tipo_usuario">
+                      <th mat-header-cell *matHeaderCellDef> {{ 'reporte.tabla.tipo' | translate }} </th>
+                      <td mat-cell *matCellDef="let politica">
+                          {{politica.tipo_usuario}}
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fecha">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'reporte.tabla.fecha' | translate }} </th>
+                    <td mat-cell *matCellDef="let politica">
+                        {{politica.fecha}}
+                    </td>
+                </ng-container>
+                  <ng-container matColumnDef="anotaciones">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'reporte.tabla.numero' | translate }} </th>
+                    <td mat-cell *matCellDef="let politica">
+                        {{politica.anotaciones}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="escoger">
+                  <th mat-header-cell *matHeaderCellDef> {{ 'reporte.tabla.escoger' | translate }} 
+                    <input *ngIf="aux" type="checkbox" (change)="seleccionarTodo($event.target.checked)" 
+                    class="form-checkbox h-5 w-5 text-indigo-600" [checked]="encabezado">
+                  </th>
+                  <td mat-cell *matCellDef="let politica">  
+                    <input type="checkbox" (change)="onChange(politica,$event.target.checked)" 
+                    class="form-checkbox h-5 w-5 text-indigo-600" [checked]="politica.escoger">               
+                  </td>
+              </ng-container>
+              </table>
+              <mat-error *ngIf="checkboxError">{{errorCheckbox()}}</mat-error>
+              <div style="text-align: center">
+                <mat-card-subtitle style="width: 100%; height: 23px;"></mat-card-subtitle>
+            </div>    
+            <mat-grid-list cols="6" rowHeight="40px" [ngStyle]="{'background-color': '#fafafa'}">
+              <mat-grid-tile [colspan]="1" [rowspan]="2">
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="4" [rowspan]="2">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>{{ 'reporte.formato' | translate }} </mat-label>
+                  <mat-select [(value)]="formato2" formControlName="formato" required>
+                    <mat-option style="color: black; font-weight: bold;">
+                      {{ 'reporte.ninguno' | translate }}
+                    </mat-option>
+                    <mat-option value="yaml" (click)="formatoReporte(formato2)">YAML</mat-option>
+                    <mat-option value="csv" (click)="formatoReporte(formato2)">CSV</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formato.invalid">{{errorFormato()}}</mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="2">
+              </mat-grid-tile>
+            </mat-grid-list>
+              <div style="text-align: center">
+                <button mat-raised-button class="standar" [disabled]="reporteFormulario.invalid || !checkbox" 
+                (click)="generarReporte()">
+                    <mat-icon>move_to_inbox</mat-icon>
+                    {{ 'botones.reporte' | translate }}
+                </button>
+            </div>
+            <div style="text-align: center">
+                <mat-card-subtitle style="width: 100%; height: 35px;"></mat-card-subtitle>
+            </div>
+        </mat-card-content>
+    </mat-dialog-content> 
+</mat-card>

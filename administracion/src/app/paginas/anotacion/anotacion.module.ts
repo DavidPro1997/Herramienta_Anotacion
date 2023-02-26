@@ -11,6 +11,7 @@ import { AnotacionPoliticaComponent } from './anotacion-politica/anotacion-polit
 import { ComentarioAnotacionComponent } from './comentario-anotacion/comentario-anotacion.component';
 import { VisualizarAnotacionesComponent } from './visualizar-anotaciones/visualizar-anotaciones.component';
 import { NotificacionIncosistenciaComponent } from './notificacion-incosistencia/notificacion-incosistencia.component';
+import { TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NotificacionIncosistenciaComponent } from './notificacion-incosistencia
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
-    Material
+    Material,
+    TranslateModule,
   ],
   entryComponents: [
     ComentarioAnotacionComponent,

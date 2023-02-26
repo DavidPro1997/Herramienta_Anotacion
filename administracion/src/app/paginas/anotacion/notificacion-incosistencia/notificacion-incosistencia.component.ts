@@ -4,6 +4,8 @@ import { Anotacion, AnotacionNotificacionConsultar } from '../anotacion';
 import { AnotacionService } from '../anotacion.service';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-notificacion-incosistencia',
@@ -19,7 +21,8 @@ export class NotificacionIncosistenciaComponent {
     @Inject(MAT_DIALOG_DATA) private data : any,
     private _anotacionService : AnotacionService,
     private _dialogoInterno : MatDialogRef<NotificacionIncosistenciaComponent>,
-    private _notificacion: MatSnackBar
+    private _notificacion: MatSnackBar,
+    private translate: TranslateService
   ) { 
     this.anotacion = data.anotacion
     this.notificacion = data.notificacion
@@ -28,10 +31,20 @@ export class NotificacionIncosistenciaComponent {
   guardarAnotacion(){
     this._anotacionService.guardarAnotacion(this.anotacion).subscribe(
       () => {
-        this.notificacionGuardado("Anotacion creada con exito!", "exito-snackbar")
+        let nota = '';
+        this.translate.stream("anotar.dialogo.anotacion_exito").subscribe((res: string)=>{
+          nota = res;
+        });
+        this.notificacionGuardado(nota, "exito-snackbar")
         this._dialogoInterno.close(true)
       },
-      () => this.notificacionGuardado("Error creando Anotacion!\nIntente nuevamente", "fracaso-snackbar")
+      () => {
+        let nota = '';
+        this.translate.stream("anotar.dialogo.anotacion_error").subscribe((res: string)=>{
+          nota = res;
+        });
+        this.notificacionGuardado(nota, "fracaso-snackbar")
+      }
     )
   }
 

@@ -1,12 +1,12 @@
 <mat-toolbar class="standar">
-    <span style="width: 100%;text-align: center"> Escoja un color</span>
+    <span style="width: 100%;text-align: center">{{ 'tratamiento.dialogo.dialogo.titulo' | translate }}</span>
 </mat-toolbar>
 <mat-card style="margin: 0 auto">
     <mat-card-content [formGroup]="formulario">
         <div class="color-picker" style="width: fit-content;margin:auto;height:auto">
             <div class="summary-info">
                 <div class="info" style="margin: 0 auto">
-                    <p class="style">{{ cabecera }}</p>
+                    <p class="style">{{ 'tratamiento.dialogo.dialogo.escogido' | translate }}</p>
                     <p class="style-value">{{ color_primario }} </p>
                 </div>
                 <div style="margin:auto" class="circle" [ngStyle]="{'background': color_primario}"></div>
@@ -27,7 +27,7 @@
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="3">
                 <button (click)="guardarColor()" class="standar" mat-button>
-                    Guardar
+                    {{ 'botones.guardar' | translate }}
                     <mat-icon>save</mat-icon>
                 </button>
             </mat-grid-tile>

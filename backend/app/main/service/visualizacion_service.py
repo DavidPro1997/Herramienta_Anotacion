@@ -27,7 +27,6 @@ def consultar_politicas_visualizar():
 
     return marshal(politicas, VisualizacionDto.listaPoliticas), 201
 
-
 def consultar_politica_visualizar(politica_id):
     """Consulta de política de privacidad con sus secciones y anotaciones """
     politica_consultar = Politica.query.filter_by(id=politica_id).first()

@@ -1,0 +1,347 @@
+{
+    "idiomas":{
+        "ingles": "Ingles",
+        "espanol" : "Español"
+    },
+    "rol":{
+        "anotador" : "Anotador",
+        "admin" : "Administrator"
+    },
+    "botones":{
+        "guardar":"Guardar",
+        "cancelar" : "Cancelar",
+        "siguiente" : "Siguiente",
+        "extraer" : "Extraer",
+        "nuevo" : "+Nuevo",
+        "cargar" : "Cargar política",
+        "ok" : "Ok", 
+        "si" : "Si",
+        "no" : "No",
+        "reporte": "Generar Reporte"
+    },
+    "home":{
+        "titulo": "Bienvenido a la herramienta de anotación",
+        "descripcion": "Este proyecto pretende transparentar las políticas de privacidad a los usuarios, gracias por ser parte de él. El gráfico que se encuentra a continuación hace un brevísimo resumen de la manera en que esta herramienta funciona:",
+        "proceso": "Proceso de Anotación"
+    },
+    "menu_arbol":{
+        "idioma": "Idioma  ",
+        "menu": "Menú",
+        "herramienta": "Herramienta de Anotación",
+        "error": "Existe un error al salir de la herramienta"
+    },
+    "usuario":{
+        "titulo": "Gestión de Usuarios",
+        "descripcion": "Lista, creación, eliminación y edición de usuarios.",
+        "filtro": "Filtrar usuario por email",
+        "error": "No ha sido posible obtener los usuarios",
+        "eliminar" : {
+            "confirmar" : "Esta seguro de eliminar este usuario.\nRecuerde que esta acción no podrá revertirse.",
+            "exito" : "¡Usuario eliminado con éxito!",
+            "error" : "¡ERROR al eliminar usuario!"
+        },
+        "tabla":{
+            "usu":"Usuario",
+            "rol":"Rol de Usuario",
+            "activo":"Activo",
+            "train":"Entrenamiento",
+            "editar":"Editar",
+            "eliminar":"Eliminar"
+        },
+        "dialogo":{
+            "titulo1": "Creación de Usuario",
+            "titulo2": "Edición de Usuario",
+            "email": "Email de usuario",
+            "rol": "Escoja el rol de usuario:",
+            "train": "Entrenamiento",
+            "activo" : "Activo: ",
+            "error" : "El formulario contiene campos vacios"    
+        }              
+    },
+    "politica":{
+        "gestion":{
+            "titulo": "Gestión de Políticas de Privacidad",
+            "descripcion": "Lista, creación, eliminación y edición de políticas de privacidad.",
+            "filtro": "Filtrar política por nombre",
+            "error": "No ha sido posible obtener las políticas de privacidad",
+            "conf_elimnar" : "Esta seguro de eliminar esta política?\nRecuerde que esta acción no podra revertirse",
+            "tabla":{
+                "nombre":"Nombre",
+                "url":"URL",
+                "fecha":"Fecha",
+                "editar":"Editar",
+                "asignar":"Asignar",
+                "eliminar":"Eliminar"
+            },
+            "dialogo":{
+                "titulo1": "Subir Política de Privacidad",
+                "titulo2": "Edición Política de Privacidad",
+                "nombre": "Nombre de la política",
+                "error_nombre": "Ingrese un nombre",
+                "url": "URL donde se obtuvo la política",
+                "error_url": "Ingrese una URL",
+                "fecha" : "Fecha en la que se obtuvo la política",
+                "error_fecha": "Escoja una fecha",
+                "archivo" : "Escoja un archivo",
+                "exito_editar" : "¡Politica editada con exito!",
+                "error_formulario" : "El formulario contiene errores, por favor corrijalo"
+            },
+            "asignar":{
+                "titulo": "Asignación de usuarios a política",
+                "nombre": "Nombre de la política",
+                "anotadores": "Asignar Anotadores",
+                "exito_anotador" : "¡Anotador {{anotador}} asignado con exito!",
+                "exito_administrador" : "¡Administrador {{admin}} asignado con exito!",
+                "error_asignado" :"¡ERROR asignando' {{asignado}} a la politica!",
+                "consolidador": "Asignar Consolidador",
+                "error_anotador":"Seleccione al menos dos anotadores",
+                "error_consolidador":"Seleccione un administrador para consolidar",
+                "error" : "Error de politica asignada",
+                "exito": "¡Politica asignada con exito!",
+                "confirmar":"Esta seguro de realizar el cambio?\nRecuerde que esto no podra ser editado en un futuro."
+            },
+            "previsualizacion":{
+                "titulo": "Politica de privacidad de: ",
+                "fecha": "Fecha: ",
+                "url": "URL: ",
+                "exito":"¡Política creada con exito!",
+                "error":"La política no pudo ser creada"
+            }
+        },
+        "insertar" : {
+            "titulo": "Extracción de Texto de Política de Privacidad",
+            "descripcion": "Cargue el archivo que contiene las URLs para descargar:",
+            "ayuda": "Ayuda",
+            "archivo": "Escoja un archivo",
+            "extraer": "Extraer",
+            "espere" :"Espere mientras se descarga el texto. No realice ninguna acción",
+            "notf_extraer" : "Se ha extraido el texto de la URL",
+            "notf_error_extraer" : "Ha ocurrido un error con la descarga, verifique la URL",
+            "no_url": "Ya no existe mas URLs",
+            "num_url" : "El archivo contiene {{num}} URLs",
+            "error_archivo":"EL archivo no pudo ser procesado.",
+            "help1":{
+                "titulo":"Información",
+                "subtitulo" : "Políticas de Privacidad",
+                "descripcion" : "Pasos para insertar políticas de privacidad automaticamente",
+                "lista" : {
+                    "1" : "1. Cree un archivo de texto con el formato .txt",
+                    "2" : "2. Añada tantas URL’s como crea necesario, separado por un enter, como en el ejemplo:",
+                    "2_1" : "   https://www.ejemplo_1.com",
+                    "2_2" : "   https://www.ejemplo_2.com",
+                    "2_3" : "   https://www.ejemplo_3.com",
+                    "2_k" : "   ........................",
+                    "2_n" : "   https://www.ejemplo_n.com",
+                    "3" : "3. Cargue el archivo de texto.",
+                    "4" : "4. Llene la información necesaria de la política de privacidad.",
+                    "5" : "5. Guarde el texto con el boton guardar.",
+                    "6" : "6. Repita desde el paso 4, si su archivo tiene más de una URL."
+                }
+            },
+            "help2":{
+                "titulo":"Formato de una política de privacidad",
+                "descripcion" : "Como dar formato a una política de privacidad correctamente",
+                "indicacion" : "Para dar formato al texto presente en la política de privacidad se debe usar las siguientes representaciones: Para indicar un título se utiliza el carácter +, y para indicar una nueva sección dos saltos de línea. Para mayor entendimiento vea el ejemplo que se indica a continuación:"
+            },
+            "dialogo":{
+                "titulo":"Insertar políticas de privacidad",
+                "texto" : "Texto de la política de privacidad",
+                "error_contenido" : "Tiene que ingresar un texto",
+                "exito" : "¡Politica creada con exito!"
+            },
+            "confirmacion":{
+                "titulo":"Confirmación",
+                "1":"¿Seguro que quieres cancelar?",
+                "2" : "¿Seguro que quieres guardar esta politíca?",
+                "3" : "Aun no has guardado la política ¿Seguro que quieres avanzar a la siguiente?",
+                "4" : "URL: {{num}}/{{total}}. ¿Desea extraer el texto?"
+            }
+        }
+    },
+    "tratamiento":{
+        "titulo" : "Gestión de Tratamientos",
+        "descripcion" : "Lista, creación y edición de tratamientos.",
+        "filtro": "Filtrar política por descripción",
+        "error": "No ha sido posible obtener los tratamientos",
+        "eliminar" : {
+            "confirmar" : "Esta seguro de eliminar este tratamiento.\nRecuerde que esta acción no podrá revertirse.",
+            "exito" : "¡Tratamiento eliminado con éxito!",
+            "error" : "¡ERROR al eliminar tratamiento!"
+        },
+        "tabla" : {
+            "desc": "Descripción",
+            "color" : "Color",
+            "editar" : "Editar",
+            "eliminar": "Eliminar"
+        },
+        "dialogo" : {
+            "titulo1": "Creación de Tratamiento",
+            "titulo2": "Edición de Tratamiento",
+            "nombre" : "Nombre del tratamiento",
+            "color" : "Color del tratamiento",
+            "dialogo" : {
+                "titulo" : "Escoja un color",
+                "escogido" : "Color escogido",
+                "exito":"¡Tratamiento creado con éxito!",
+                "error":"¡Error al crear tratamiento!",
+                "error_form":"El formulario contiene errores.\nPor favor revíselo",
+                "exito_editar":"¡Tratamiento editado con éxito!",
+                "error_editar":"¡Error al editar tratamiento!"
+            }
+        }
+    },
+    "atributo":{
+        "titulo":"Gestión de atributos",
+        "descripcion" : "Lista, creación, eliminación y edición de atributos.",
+        "tratamiento": "Escoja un tratamiento de datos",
+        "ninguno":"Ninguno",
+        "eliminar" : {
+            "confirmar" : "Esta seguro de eliminar este atributo.\nRecuerde que esta acción no podrá revertirse.",
+            "exito" : "Atributo eliminado con éxito!",
+            "error" : "¡ERROR al eliminar atributo!"
+        },
+        "tabla" : {
+            "desc": "Descripción",
+            "color" : "Color",
+            "editar" : "Editar",
+            "eliminar": "Eliminar"
+        },
+        "dialogo" : {
+            "titulo1": "Creación de Atributo",
+            "titulo2": "Edición de Atributo",
+            "nombre" : "Nombre atributo",
+            "exito":"¡Atributo creado con éxito!",
+            "error":"¡Error al crear atributo!",
+            "error_form":"El formulario contiene errores.\nPor favor revíselo",
+            "exito_editar":"¡Atributo editado con éxito!",
+            "error_editar":"¡Error al editar atributo!"
+        }
+    },
+    "valor":{
+        "titulo":"Gestión de valores",
+        "descripcion" : "Lista, creación, eliminación y edición de valores.",
+        "tratamiento": "Escoja un tratamiento de datos",
+        "atributo" : "Escoja un atributo del tratamiento",
+        "ninguno":"Ninguno",
+        "eliminar" : {
+            "confirmar" : "Esta seguro de eliminar este valor.\nRecuerde que esta acción no podrá revertirse.",
+            "exito" : "Valor eliminado con éxito!",
+            "error" : "¡ERROR al eliminar valor!"
+        },
+        "tabla" : {
+            "desc": "Descripción",
+            "color" : "Color",
+            "editar" : "Editar",
+            "eliminar": "Eliminar"
+        },
+        "dialogo" : {
+            "titulo1": "Creación de Valor",
+            "titulo2": "Edición de Valor",
+            "nombre" : "Nombre del valor",
+            "exito":"¡Valor creado con éxito!",
+            "error":"¡Error al crear valor!",
+            "error_form":"El formulario contiene errores.\nPor favor revíselo",
+            "exito_editar":"¡Valor editado con éxito!",
+            "error_editar":"¡Error al editar valor!"
+        }
+    },
+    "reporte":{
+        "titulo":"Reportes",
+        "descripcion" : "Generación de reportes de políticas de privacidad anotadas.",
+        "exito": "¡Se ha creado el reporte con éxito!",
+        "politica": "Escoja el tipo de políticas anotadas",
+        "error_politica": "No ha sido posible obtener las políticas de privacidad",
+        "tipo":{
+            "finalizadas" : "Finalizadas",
+            "no_finalizadas" : "No Finalizadas"
+        },
+        "formato" : "Escoja un formato para el reporte",
+        "ninguno":"Ninguno",
+        "filtro" :"Filtrar política por nombre",
+        "error_escoger" : "Escoja al menos una política anotada que tenga un numero de anotaciones mayor a cero",
+        "tabla" : {
+            "nombre": "Nombre Política",
+            "usuario" : "Usuario",
+            "tipo" : "Tipo de Usuario",
+            "fecha": "Fecha de ultima Anotación",
+            "numero" : "Número de Anotaciones",
+            "escoger" : "Escoger"
+        }   
+    },
+    "consolidar": {
+        "titulo": "Políticas de privacidad por consolidar",
+        "descripcion" : "Lista de políticas de privacidad asignadas para consolidar.",
+        "no_hay" : "Por el momento no existen políticas de privacidad por ser consolidadas",
+        "tabla": {
+            "nombre" : "Políticas asignadas por codificar",
+            "progreso" : "Progreso",
+            "detalles" : "Detalles"
+        },
+        "detalles" : {
+            "titulo" : "Detalles de la política de privacidad",
+            "nombre" : "Nombre:",
+            "coeficiente" : "Coeficiente Interanotador:",
+            "tabla": {
+                "anotador" : "Nombre Anotador",
+                "anotaciones" : "Número Anotaciones"
+            }
+        },
+        "dialogo":{
+            "comentario" : "Comentario:",
+            "ejecuta": "Ejecuta",
+            "no_ejecuta" : "No Ejecuta",
+            "inconsistencia": "ANOTACIONES INCONSITENTES",
+            "consistencia": "ANOTACIONES CONSITENTES",
+            "confirmar": "Ha terminado de anotar esta política, ¿desea finalizar?\nUna vez finalizada no podrá ser modificada",
+            "advertencia" : "ES NECESARIO SELECCIONAR AL MENOS UN TRATAMIENTO DE DATOS",
+            "anotacion_exito":"¡Anotación creada con exito!",
+            "anotacion_error" : "¡ERROR creando anotación!",
+            "exito": "¡Política finalizada con éxito!",
+            "error": "¡ERROR finalizando política!",
+            "texto" : "No existe texto seleccionado",
+            "duplicado" : "¡Anotación duplicada con éxito!",
+            "no_anotacion": "Esta sección no contiene anotaciones",
+            "anotacion" : "Anotación:"
+        }
+    },
+    "anotar": {
+        "titulo": "Políticas de privacidad por anotar",
+        "descripcion" : "Lista de políticas de privacidad asignadas para anotar.",
+        "no_hay" : "Por el momento no existen políticas de privacidad por ser anotadas",
+        "tabla": {
+            "nombre" : "Políticas asignadas por anotar",
+            "progreso" : "Progreso"
+        },
+        "dialogo":{
+            "comentario" : "Comentario:",
+            "comentario1" : "Escribe un comentario:",
+            "comentario2": "Ej. Explica la manera en que se toman los datos.",
+            "ejecuta": "Ejecuta",
+            "no_ejecuta" : "No Ejecuta",
+            "codificar": "Este parrafo ha sido codificado sin ninguna anotación.",
+            "inconsistencia": "INCONSISTENCIA",
+            "inconsistencia_mensaje": "El(los) siguiente(s) tratamiento(s) es(son) inconsistente(s):",
+            "sugerencia1": "Para este parrafo se sugiere los siguientes tratamientos: ",
+            "sugerencia2": "Considere en no marcar ningun valor y continuar al siguiente párrafo.",
+            "mensaje_guardar" : "¿Aún desea guardar esta anotación?",
+            "accion" : "Bajo la accion de: ",
+            "confirmar": "Ha terminado de anotar esta política, ¿desea finalizar?\nUna vez finalizada no podrá ser modificada",
+            "advertencia" : "ES NECESARIO SELECCIONAR AL MENOS UN TRATAMIENTO DE DATOS",
+            "anotacion_exito":"¡Anotación creada con exito!",
+            "anotacion_error" : "¡ERROR creando anotación!",
+            "editar_exito":"¡Anotación editada con exito!",
+            "editar_error" : "¡ERROR editando anotación!",
+            "exito": "¡Política finalizada con éxito!",
+            "error": "¡ERROR finalizando política!",
+            "seccion" : "¡Seleccione una sección de texto!",
+            "texto" : "TEXTO SELECCIONADO:",
+            "anotacion" : "Anotación:",
+            "eliminar" : "Eliminar Anotación",
+            "editar" : "Editar Anotación",
+            "resumen" : "Resumen de anotaciones realizadas",
+            "confirmar_eliminar":"Esta seguro de eliminar esta anotacion?\nEsta acción no podra ser revertida",
+            "exito_eliminar":"¡Anotación eliminada con exito!",
+            "error_eliminar":"¡ERROR eliminando anotación!"
+        }
+    }
+}

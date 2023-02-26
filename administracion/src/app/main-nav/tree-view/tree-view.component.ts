@@ -1,7 +1,8 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Input } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { Modulo} from './tree-view'
+import { Modulo} from './tree-view';
+import {TranslateService} from "@ngx-translate/core";
 
 
 interface ExampleFlatNode {
@@ -37,10 +38,9 @@ export class TreeViewComponent {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(
-
-  ) {
-    this.dataSource.data = this.modulos;
+  constructor(private translate: TranslateService
+    ) {
+      this.dataSource.data = this.modulos;    
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;

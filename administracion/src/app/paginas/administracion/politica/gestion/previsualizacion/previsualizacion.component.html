@@ -1,5 +1,5 @@
 <mat-toolbar class="standar">
-    <span style="width: 100%;text-align: center;">Politica de privacidad de:
+    <span style="width: 100%;text-align: center;">{{ 'politica.gestion.previsualizacion.titulo' | translate }}
         {{politicaGuardar.nombre}}</span>
 </mat-toolbar>
 
@@ -8,13 +8,13 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="2" >
             <mat-card-title class="cuadro">
-                <span style="font-size: 14px; font-weight: normal;">Fecha: {{politicaGuardar.fecha | date}} </span>
+                <span style="font-size: 14px; font-weight: normal;">{{ 'politica.gestion.previsualizacion.fecha' | translate }} {{politicaGuardar.fecha | date}} </span>
             </mat-card-title>
 
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2" [rowspan]="2">
-            <mat-card-title class="cuadro">URL: 
+            <mat-card-title class="cuadro">{{ 'politica.gestion.previsualizacion.url' | translate }} 
             <a style="font-size: 14px; font-weight: normal;" href="{{politicaGuardar.url}}"> 
                 {{politicaGuardar.url}} </a>
             </mat-card-title>
@@ -45,14 +45,14 @@
 
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <button (click)="cancelarPolitica()" class="standarNegativo" mat-button>
-                    Cancelar
+                    {{ 'botones.cancelar' | translate }}
                     <mat-icon>clear</mat-icon>
                 </button>
             </mat-grid-tile>
 
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <button (click)="guardarPolitica()" class="standar" mat-button>
-                    Guardar
+                    {{ 'botones.guardar' | translate }}
                     <mat-icon>save</mat-icon>
                 </button>
             </mat-grid-tile>

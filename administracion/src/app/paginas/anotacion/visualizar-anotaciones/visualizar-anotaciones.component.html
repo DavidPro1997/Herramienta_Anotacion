@@ -1,6 +1,6 @@
 <mat-card class="standar" style="color: white; text-align:  center;">
     <mat-card-title>
-        Resumen de anotaciones realizadas
+        {{ 'anotar.dialogo.resumen' | translate }}
     </mat-card-title>
 </mat-card>
 
@@ -20,14 +20,14 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="1">
             <mat-icon style="color: tomato; position: absolute; cursor: pointer;" (click)="eliminarAnotacion(anotacion)"
-                matTooltip="Eliminar anotacion">
+                matTooltip="{{ 'anotar.dialogo.eliminar' | translate }}">
                 delete_forever
             </mat-icon>
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="1" [rowspan]="1">
             <mat-icon style="color: #106CC8; position: absolute; cursor: pointer;" (click)="editarAnotacion(anotacion)"
-                matTooltip="Editar anotacion">
+                matTooltip="{{ 'anotar.dialogo.editar' | translate }}">
                 edit
             </mat-icon>
         </mat-grid-tile>
@@ -37,15 +37,15 @@
     <hr>
     <mat-card-content>
 
-        <span style="font-weight: 500; text-align: justify;">Anotacion:
+        <span style="font-weight: 500; text-align: justify;">{{ 'anotar.dialogo.anotacion' | translate }}
             <span *ngIf="anotacion.ejecuta; else noEjecuta" style="color: green; font-weight: 600;">
-                Ejecuta
+                {{ 'anotar.dialogo.ejecuta' | translate }}
                 <br>
             </span>
 
             <ng-template #noEjecuta>
                 <span style="color: red; font-weight: 600;">
-                    No ejecuta
+                    {{ 'anotar.dialogo.no_ejecuta' | translate }}
                 </span>
                 <br>
             </ng-template>
@@ -55,7 +55,7 @@
         {{anotacion.texto}}
         <br>
         <br>
-        <span style="font-weight: 500; text-align: justify;">Comentario:</span>
+        <span style="font-weight: 500; text-align: justify;">{{ 'anotar.dialogo.comentario' | translate }}</span>
         <br>
         {{anotacion.comentario}}
         <br>

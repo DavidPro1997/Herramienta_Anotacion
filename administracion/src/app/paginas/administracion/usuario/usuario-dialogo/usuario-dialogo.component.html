@@ -8,12 +8,12 @@
             <mat-dialog-content [formGroup]="formulario">
 
                 <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Email de Usuario</mat-label>
-                    <input type="text" matInput placeholder="Email de usuario" formControlName="email"
+                    <mat-label>{{ 'usuario.dialogo.email' | translate }}</mat-label>
+                    <input type="text" matInput placeholder="{{ 'usuario.dialogo.email' | translate }}" formControlName="email"
                         value={{usuarioAux.email}}>
                 </mat-form-field>
 
-                <label id="rol_usuario">Escoja el rol de usuario: </label>
+                <label id="rol_usuario">{{ 'usuario.dialogo.rol' | translate }}</label>
                 <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="rol_usuario_id">
                     <mat-radio-button class="example-radio-button" *ngFor="let rol of rolesUsuario" [value]="rol.id">
                         {{rol.descripcion}}
@@ -21,7 +21,7 @@
                 </mat-radio-group>
 
                 <section class="example-section">
-                    <span>En entrenamiento: </span>
+                    <span>{{ 'usuario.dialogo.train' | translate }} </span>
                     <mat-slide-toggle
                         formControlName="entrenamiento"
                         style="padding-left: 15px;"
@@ -30,7 +30,7 @@
                 </section>
 
                 <section *ngIf="!nuevo" class="example-section">
-                    <span>Activo: </span>
+                    <span>{{ 'usuario.dialogo.activo' | translate }} </span>
                     <mat-slide-toggle 
                         formControlName="activo"
                         style="padding-left: 15px;"
@@ -49,7 +49,7 @@
                 </mat-grid-tile>
                 <mat-grid-tile [colspan]="1" [rowspan]="2">
                     <button (click)="guardar()" class="standar" mat-button>
-                        Guardar
+                        {{ 'botones.guardar' | translate }}
                         <mat-icon>save</mat-icon>
                     </button>
                 </mat-grid-tile>

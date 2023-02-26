@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PoliticaService } from '../administracion/politica/politica.service'
-import { PoliticaAnotarConsultar } from '../administracion/politica/politica'
+import { PoliticaService } from '../administracion/politica/gestion/gestion.service'
+import { PoliticaAnotarConsultar } from '../administracion/politica/gestion/gestion'
 import { Router } from '@angular/router';
 
 

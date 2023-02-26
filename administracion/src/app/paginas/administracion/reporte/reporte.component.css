@@ -1,0 +1,33 @@
+.standar {
+    color: white;
+    background-color: #106CC8;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+.example-full-width {
+    width: 100%;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+::ng-deep.mat-dialog-container {
+    height: unset !important;
+}
+
+p {
+    font-family: Lato;
+  }
+  .btn{
+    padding: 10px;
+    background-color: #106CC8;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+  }

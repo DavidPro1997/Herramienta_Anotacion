@@ -1,0 +1,48 @@
+policy_1:
+  contains_synthetic: false
+  policy_id: 1
+  policy_name: Prueba1
+  policy_type: TEST
+  segments:
+    segments_1:
+      performed: true
+      segment_id: 1
+      segment_text: "Los Sitios de Internet de 3M usan \u201Ccookies de sesi\xF3n\u201D\
+        . Una cookie de sesi\xF3n no le identifica de forma individual y caduca cuando\
+        \ se cierra el explorador. Por ejemplo, al utilizar el cat\xE1logo de productos\
+        \ de 3M, se instala una cookie de sesi\xF3n para guardar las p\xE1ginas que\
+        \ ha visitado. Podemos utilizar esta informaci\xF3n para ofrecerle recomendaciones\
+        \ de otros productos que puedan interesarle. "
+      sentences:
+        sentences_1:
+          practice_att: Atributo2
+          practice_type: Atributo2
+          practice_value: Valor2
+          sentence_text: "Los Sitios de Internet de 3M usan \u201Ccookies de sesi\xF3\
+            n\u201D. Una cookie de sesi\xF3n no le identifica de forma individual\
+            \ y caduca cuando se cierra el explorador."
+    segments_2:
+      performed: true
+      segment_id: 3
+      segment_text: "Los Sitios de Internet de 3M tambi\xE9n usan \u201Ccookies persistentes\u201D\
+        . Estas cookies no caducan cuando se cierra el navegador. Las cookies persistentes\
+        \ permanecen en su ordenador hasta que usted las elimina o caduquen. Al asignarle\
+        \ un identificador exclusivo a su ordenador, podemos crear una base de datos\
+        \ de sus preferencias y elecciones anteriores que se pueden proporcionar autom\xE1\
+        ticamente, lo que le ahorra tiempo y trabajo en futuras visitas. Por ejemplo,\
+        \ despu\xE9s de hacer una compra, si decide hacer otra compra, es posible\
+        \ que su direcci\xF3n de env\xEDo se haya conservado y solo necesite confirmarla. "
+      sentences:
+        sentences_1:
+          practice_att: Atributo3
+          practice_type: Atributo3
+          practice_value: Valor4
+          sentence_text: "Los Sitios de Internet de 3M tambi\xE9n usan \u201Ccookies\
+            \ persistentes\u201D"
+        sentences_2:
+          practice_att: Atributo3
+          practice_type: Atributo3
+          practice_value: Valor5
+          sentence_text: " Por ejemplo, despu\xE9s de hacer una compra, si decide\
+            \ hacer otra compra, es posible que su direcci\xF3n de env\xEDo se haya\
+            \ conservado y solo necesite confirmarla."

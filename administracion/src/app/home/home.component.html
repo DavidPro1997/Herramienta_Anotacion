@@ -1,13 +1,10 @@
 <mat-grid-list cols="10" rowHeight="1:6">
 
     <mat-grid-tile [colspan]="10" >
-        <mat-card style="height: 100%;">
-            <h1 class="titulo">Bienvenido a la herramienta de anotación</h1>
+        <mat-card style="height: 100%; width: 100%;">
+            <h1 class="titulo">{{ 'home.titulo' | translate }}</h1>
             <p class="parrafo">
-                Este proyecto pretende transparentar las políticas de privacidad a los usuarios,
-                gracias por ser parte de él.
-                El gráfico que se encuentra a continuación hace un brevísimo resumen de la manera
-                en que esta herramienta funciona:
+                {{ 'home.descripcion' | translate }}
             </p>
 
             <div class="contenedor" >
@@ -15,15 +12,8 @@
                
             </div>
             <figcaption class="leyenda">
-                Proceso de anotacion
+                {{ 'home.proceso' | translate }}
             </figcaption>
-
-            <div class="parrafo">
-                <ul>
-                    <li>Hemos escogido una serie de políticas de privacidad para que sean anotadas,
-                        da click en anotación para que puedas ver cuales te han sido asignadas.</li>
-                </ul>
-            </div>
 
         </mat-card>
        

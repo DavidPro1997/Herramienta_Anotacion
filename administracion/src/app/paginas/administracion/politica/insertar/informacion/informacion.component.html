@@ -1,0 +1,55 @@
+<div>
+    <mat-toolbar class="standar" >
+        <span style="width: 100%;text-align: center;">{{ 'politica.insertar.help1.titulo' | translate }}</span>
+    </mat-toolbar>
+    <mat-card *ngIf="ayudaUrls">
+        <mat-card-header>
+            <mat-card-title>{{ 'politica.insertar.help1.subtitulo' | translate }}</mat-card-title>
+            <mat-card-subtitle>
+                {{ 'politica.insertar.help1.descripcion' | translate }}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list role="list">
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.1' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.2' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.2_1' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.2_2' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.2_3' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.2_k' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.2_n' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.3' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.4' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.5' | translate }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'politica.insertar.help1.lista.6' | translate }}</mat-list-item>
+
+              </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button class="standar" (click)="onNoClick()">
+                <mat-list-item role="listitem">{{ 'botones.ok' | translate }}</mat-list-item>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+
+    <mat-card *ngIf="ayudaTexto">
+        <mat-card-header>
+            <mat-card-title>{{ 'politica.insertar.help2.titulo' | translate }}</mat-card-title>
+            <mat-card-subtitle>
+                {{ 'politica.insertar.help2.descripcion' | translate }}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{ 'politica.insertar.help2.indicacion' | translate }}</p>
+            <br><br>
+            <img class="imagen" src="assets/images/Plantilla.png" alt="Ejemplo Politica">
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button class="standar" (click)="onNoClick()">
+                {{ 'botones.ok' | translate }}
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ 'politica.insertar.confirmacion.titulo' | translate }}</h1>
+<div mat-dialog-content>
+    <p>{{nota}}</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="cerrarDialogo()">{{ 'botones.no' | translate }}</button>
+    <button mat-button (click)="confirmado()" cdkFocusInitial>{{ 'botones.si' | translate }}</button>
+</div>

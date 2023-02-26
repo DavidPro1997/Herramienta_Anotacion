@@ -7,15 +7,15 @@
         <mat-card-content>
             <mat-dialog-content [formGroup]="formulario">
                 <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Nombre Tratamiento</mat-label>
-                    <input type="text" matInput placeholder="Nombre de tratamiento" formControlName="descripcion" required>
+                    <mat-label>{{ 'tratamiento.dialogo.nombre' | translate }}</mat-label>
+                    <input type="text" matInput placeholder="{{ 'tratamiento.dialogo.nombre' | translate }}" formControlName="descripcion" required>
 
                 </mat-form-field>
 
                 <mat-form-field class="example-full-width" appearance="outline" style="padding-bottom: -1.34375em;">
-                    <mat-label>Color del tratamiento</mat-label>
+                    <mat-label>{{ 'tratamiento.dialogo.color' | translate }}</mat-label>
 
-                    <input matInput placeholder="Color Primario" formControlName="color_primario_string"
+                    <input matInput placeholder="{{ 'tratamiento.dialogo.color' | translate }}" formControlName="color_primario_string"
                         [ngStyle]="estiloAnotacion(formulario.value.color_primario_string)">
 
                     <mat-icon title='Editar color' matSuffix (click)="colorPicker(tratamientoAux.color_primario_codigo)"
@@ -32,7 +32,7 @@
                 </mat-grid-tile>
                 <mat-grid-tile [colspan]="1" [rowspan]="2">
                     <button (click)="guardar()" class="standar" mat-button>
-                        Guardar
+                        {{ 'botones.guardar' | translate }}
                         <mat-icon>save</mat-icon>
                     </button>
                 </mat-grid-tile>

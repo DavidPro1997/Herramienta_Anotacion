@@ -4,6 +4,9 @@ import { MAT_DIALOG_DATA, MatSnackBar, MatDialogRef } from '@angular/material';
 import { Atributo, AtributoGuardar, AtributoEditar } from '../atributo';
 import { AtributoService } from '../atributo.service';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
+import { not } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-atributo-dialogo',
@@ -22,15 +25,20 @@ export class AtributoDialogoComponent implements OnInit {
     private _atributoService : AtributoService,
     private _notificacion : MatSnackBar,
     private _dialogoInterno : MatDialogRef<AtributoDialogoComponent>,
+    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { 
     this.atributoAux = data.atributo
     this.formulario = this.crearFormulario(this.atributoAux);
     this.nuevo = data.nuevo;
     if (this.nuevo) {
-      this.titulo = 'Creación de Atributo'
+        this.translate.stream("atributo.dialogo.titulo1").subscribe((res: string)=>{
+          this.titulo = res;
+        });
     } else {
-      this.titulo = 'Edición de Atributo'
+      this.translate.stream("atributo.dialogo.titulo2").subscribe((res: string)=>{
+        this.titulo = res;
+      });
     }
   }
 
@@ -43,20 +51,38 @@ export class AtributoDialogoComponent implements OnInit {
   guardarAtributo(atributoAux : AtributoGuardar){
     return this._atributoService.crearAtributo(atributoAux).subscribe(
       ()=>  {
-        this.notificacion("Atributo creado con éxito!", "exito-snackbar")
+        let note = '';
+        this.translate.stream("atributo.dialogo.exito").subscribe((res: string)=>{
+          note = res;
+        });
+        this.notificacion(note, "exito-snackbar")
         this._dialogoInterno.close()
       },
-      () => this.notificacion("ERROR creando tratamiento!", "fracaso-snackbar")
+      () => {
+        let note = '';
+        this.translate.stream("atributo.dialogo.error").subscribe((res: string)=>{
+          note = res;
+        });
+        this.notificacion(note, "fracaso-snackbar")}
     )
   }
 
   editarAtributo(atributoAux : AtributoEditar){
     return this._atributoService.editarAtributo(atributoAux).subscribe(
       ()=>  {
-        this.notificacion("Atributo editado con éxito!", "exito-snackbar")
+        let note = '';
+        this.translate.stream("atributo.dialogo.exito_editar").subscribe((res: string)=>{
+          note = res;
+        });
+        this.notificacion(note, "exito-snackbar")
         this._dialogoInterno.close()
       },
-      () => this.notificacion("ERROR editando tratamiento!", "fracaso-snackbar")
+      () => {
+        let note = '';
+        this.translate.stream("atributo.dialogo.error_editar").subscribe((res: string)=>{
+          note = res;
+        });
+        this.notificacion(note, "fracaso-snackbar")}
     )
   }
 
@@ -76,7 +102,11 @@ export class AtributoDialogoComponent implements OnInit {
         this.editarAtributo(atributoEditar)
       }
     }else{
-      alert("El formulario contiene errores, por favor revíselo.")
+      let note = '';
+        this.translate.stream("atributo.dialogo.error_form").subscribe((res: string)=>{
+          note = res;
+        });
+      alert(note)
     }
     
   }

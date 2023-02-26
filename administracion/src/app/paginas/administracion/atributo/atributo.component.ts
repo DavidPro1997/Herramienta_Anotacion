@@ -7,6 +7,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import { AtributoDialogoComponent } from './atributo-dialogo/atributo-dialogo.component';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-atributo',
@@ -41,7 +43,8 @@ export class AtributoComponent implements OnInit {
     private readonly _tratamientoService: TratamientoService,
     private readonly _atributoService: AtributoService,
     private _notificacion : MatSnackBar,
-    private _dialogo : MatDialog
+    private _dialogo : MatDialog,
+    private translate: TranslateService
   ) { }
 
   //DIALOGOS
@@ -80,13 +83,27 @@ export class AtributoComponent implements OnInit {
   //FIN DIALOGOS 
 
   eliminarAtributo(atributoId : number){
-    if (confirm("Esta seguro de eliminar este atributo?\nRecuerde que esta acción no podra revertirse")){
+    let mensaje = '';
+          this.translate.stream("atributo.eliminar.confirmar").subscribe((res: string)=>{
+            mensaje = res;
+      });
+    if (confirm(mensaje)){
       this._atributoService.eliminarAtributo(atributoId).subscribe(
         ()=> {
-          this.notificacion("Atributo eliminado con exito!", "exito-snackbar"),
+          let nota = '';
+          this.translate.stream("atributo.eliminar.exito").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "exito-snackbar"),
           this.consultarAtributosTratamiento(this.tratamientoSeleccionado.id)
         }, 
-        () => this.notificacion("ERROR al eliminar atributo!", "fracaso-snackbar")
+        () => {
+          let nota = '';
+          this.translate.stream("atributo.eliminar.error").subscribe((res: string)=>{
+            nota = res;
+          });
+          this.notificacion(nota, "fracaso-snackbar")
+        }
       )
     }
   }

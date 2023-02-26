@@ -1,14 +1,14 @@
 <div style="height: 100%;">
     <mat-toolbar class="standar">
-        <span style="width: 100%;text-align: center">Detalles de la política de privacidad</span>
+        <span style="width: 100%;text-align: center">{{ 'consolidar.detalles.titulo' | translate }}</span>
     </mat-toolbar>
 
     <mat-card>
         <div style="padding:5px; padding-top: 0px;">
-            Nombre: {{politica.politica_nombre}}
+            {{ 'consolidar.detalles.nombre' | translate }} {{politica.politica_nombre}}
         </div>
         <div style="padding:5px;  padding-top: 0px">
-        Coeficiente interanotador = {{listaInteranotador.coeficiente}}
+            {{ 'consolidar.detalles.coeficiente' | translate }} {{listaInteranotador.coeficiente}}
         </div>
 
         <mat-card-content>
@@ -23,12 +23,12 @@
                 </ng-container>
 
                 <ng-container matColumnDef="anotador">
-                    <th mat-header-cell *matHeaderCellDef> anotador </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ 'consolidar.detalles.tabla.anotador' | translate }} </th>
                     <td mat-cell *matCellDef="let anotador; let indice = index"> {{anotador.email}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="total_anotaciones">
-                    <th mat-header-cell *matHeaderCellDef> total anotaciones </th>
+                    <th mat-header-cell *matHeaderCellDef>{{ 'consolidar.detalles.tabla.anotaciones' | translate }}</th>
                     <td mat-cell *matCellDef="let anotador; let indice = index"> {{anotador.total_anotaciones}} </td>
                 </ng-container>
 

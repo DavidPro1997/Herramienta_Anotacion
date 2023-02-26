@@ -9,17 +9,23 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TratamientoDialogoComponent } from './tratamiento/tratamiento-dialogo/tratamiento-dialogo.component';
 import { PaletaColoresComponent } from './tratamiento/tratamiento-dialogo/paleta-colores/paleta-colores.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { PoliticaComponent } from './politica/politica.component';
+//import { PoliticaComponent } from './politica/politica.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { AtributoComponent } from './atributo/atributo.component';
 import { ValorComponent } from './valor/valor.component';
 import { AtributoDialogoComponent } from './atributo/atributo-dialogo/atributo-dialogo.component';
-import { PoliticaDialogoComponent } from './politica/politica-dialogo/politica-dialogo.component';
+import { PoliticaDialogoComponent } from './politica/gestion/politica-dialogo/politica-dialogo.component';
 import { UsuarioDialogoComponent } from './usuario/usuario-dialogo/usuario-dialogo.component';
 import { ValorDialogoComponent } from './valor/valor-dialogo/valor-dialogo.component';
-import { PrevisualizacionComponent } from './politica/previsualizacion/previsualizacion.component';
-import { AsignarPoliticaComponent } from './politica/asignar-politica/asignar-politica.component';
-
+import { PrevisualizacionComponent } from './politica/gestion/previsualizacion/previsualizacion.component';
+import { AsignarPoliticaComponent } from './politica/gestion/asignar-politica/asignar-politica.component';
+//import { GestionComponent } from './politica/gestion/gestion.component';
+//import { InsertarComponent } from './politica/insertar/insertar.component';
+import { ReporteComponent } from './reporte/reporte.component';
+import { InformacionComponent } from './politica/insertar/informacion/informacion.component';
+//import { InsertarDialogoComponent } from './politica/insertar/insertar-dialogo/insertar-dialogo.component';
+//import { ConfirmacionDialogoComponent } from './politica/insertar/confirmacion-dialogo/confirmacion-dialogo.component';
+import { TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -27,7 +33,7 @@ import { AsignarPoliticaComponent } from './politica/asignar-politica/asignar-po
     TratamientoComponent,
     TratamientoDialogoComponent,
     PaletaColoresComponent,
-    PoliticaComponent,
+    //PoliticaComponent,
     UsuarioComponent,
     AtributoComponent,
     ValorComponent,
@@ -36,7 +42,13 @@ import { AsignarPoliticaComponent } from './politica/asignar-politica/asignar-po
     UsuarioDialogoComponent,
     ValorDialogoComponent,
     PrevisualizacionComponent,
-    AsignarPoliticaComponent
+    AsignarPoliticaComponent,
+    //GestionComponent,
+    //InsertarComponent,
+    ReporteComponent,
+    InformacionComponent,
+    /*InsertarDialogoComponent,
+    ConfirmacionDialogoComponent,*/
   ],
   entryComponents:[
     TratamientoDialogoComponent,
@@ -47,6 +59,9 @@ import { AsignarPoliticaComponent } from './politica/asignar-politica/asignar-po
     UsuarioDialogoComponent,
     ValorDialogoComponent,
     AsignarPoliticaComponent,
+    InformacionComponent,
+    /*InsertarDialogoComponent,
+    ConfirmacionDialogoComponent,*/
   ],
   imports: [
     AdministracionRoutingModule,
@@ -55,7 +70,9 @@ import { AsignarPoliticaComponent } from './politica/asignar-politica/asignar-po
     HttpClientModule,
     MatDialogModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    TranslateModule,
     
   ],
   providers:[
@@ -63,6 +80,5 @@ import { AsignarPoliticaComponent } from './politica/asignar-politica/asignar-po
     HttpClient,
     DatePipe
   ]
-
 })
 export class AdministracionModule { }

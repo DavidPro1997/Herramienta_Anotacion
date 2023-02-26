@@ -9,6 +9,8 @@ import { AnotacionComponent } from './anotacion/anotacion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AnotacionModule } from './anotacion/anotacion.module';
 import { ConsolidacionModule } from './consolidacion/consolidacion.module';
+import { TranslateModule} from '@ngx-translate/core';
+
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { ConsolidacionModule } from './consolidacion/consolidacion.module';
     FormsModule,
     ReactiveFormsModule,
     AnotacionModule,
-    ConsolidacionModule
+    ConsolidacionModule,
+    TranslateModule,
   ],
   bootstrap:[PaginasComponent],
   providers:[]

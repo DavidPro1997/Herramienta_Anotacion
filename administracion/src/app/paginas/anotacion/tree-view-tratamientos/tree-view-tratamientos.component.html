@@ -1,20 +1,20 @@
 <div>
   <mat-card style="color:indianred; ">
-      Seleccione al menos un tratamiento de datos
+    {{ 'anotar.dialogo.advertencia' | translate }}
   </mat-card>
 </div>
 
 <mat-card class="mat">
   <mat-card-content>
     <section class="example-section">
-      <span style="color: forestgreen;">Ejecuta</span> 
+      <span style="color: forestgreen;">{{ 'anotar.dialogo.ejecuta' | translate }}</span> 
       <mat-slide-toggle
           id="slide"
           (change)="cambiarEjecuta()"
           class="example-margin"
           [color] = "color"
           [checked]="ejecutaAux">
-        <span style="color: tomato;"> No ejecuta </span>
+        <span style="color: tomato;"> {{ 'anotar.dialogo.no_ejecuta' | translate }} </span>
       </mat-slide-toggle>
     </section>
   </mat-card-content>

@@ -1,12 +1,13 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { DOCUMENT } from '@angular/common'
-import { PoliticaService } from 'src/app/paginas/administracion/politica/politica.service'
-import { PoliticaVisualizar } from '../../administracion/politica/politica';
+import { PoliticaService } from 'src/app/paginas/administracion/politica/gestion/gestion.service'
+import { PoliticaVisualizar } from '../../administracion/politica/gestion/gestion';
 import { SelectTextBoxService } from './seleccionar-texto.service'
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { VisualizarAnotacionesComponent } from '../visualizar-anotaciones/visualizar-anotaciones.component';
 import { NotificacionComponent } from 'src/app/notificacion/notificacion.component';
 import { Router } from '@angular/router';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-seleccionar-texto',
@@ -40,7 +41,8 @@ export class SeleccionarTextoComponent implements OnInit {
     private _seleccionarTextoService: SelectTextBoxService,
     private _dialogo: MatDialog,
     private _notificacion: MatSnackBar,
-    private _router: Router
+    private _router: Router,
+    private translate: TranslateService
   ) { }
 
   visualizarAnotaciones() {
@@ -81,10 +83,20 @@ export class SeleccionarTextoComponent implements OnInit {
   politicaUsuarioFinalizada() {
     this._politicaService.editarPoliticaAnotadorFinalizada(this.politicaId, this.usuarioAux.id, false).subscribe(
       () => {
-        this.notificacion("Politica finalizada con exito!", "exito-snackbar")
+        let nota = '';
+        this.translate.stream("anotar.dialogo.exito").subscribe((res: string)=>{
+          nota = res;
+        });
+        this.notificacion(nota, "exito-snackbar")
         this._router.navigate(['/paginas/anotacion'])
       },
-      () => this.notificacion("ERROR finalizando politica!", "fracaso-snackbar")
+      () => {
+        let nota = '';
+        this.translate.stream("anotar.dialogo.error").subscribe((res: string)=>{
+          nota = res;
+        });
+        this.notificacion(nota, "fracaso-snackbar")
+      }
     )
   }
 
@@ -140,7 +152,11 @@ export class SeleccionarTextoComponent implements OnInit {
       this.limpiarTextoEscogido();
       this.parrafo_cambiado.emit()
     } else {
-      if (confirm("Ha terminado de anotar esta política, desea finalizar?\nUna vez finalizada no podra ser modificada")) {
+      let nota = '';
+        this.translate.stream("anotar.dialogo.confirmar").subscribe((res: string)=>{
+          nota = res;
+        });
+      if (confirm(nota)) {
         this.politicaUsuarioFinalizada()
       }
     }
@@ -157,7 +173,11 @@ export class SeleccionarTextoComponent implements OnInit {
     if (this.textoSeleccionado != "") {
       this.guardar_anotaciones.emit();
     } else {
-      this.notificacion("Seleccione una sección de texto!", "advertencia-snackbar")
+      let nota = '';
+        this.translate.stream("anotar.dialogo.seccion").subscribe((res: string)=>{
+          nota = res;
+        });
+      this.notificacion(nota, "advertencia-snackbar")
     }
   }
 

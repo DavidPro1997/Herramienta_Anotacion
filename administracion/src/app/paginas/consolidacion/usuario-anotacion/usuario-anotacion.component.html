@@ -3,7 +3,7 @@
     <mat-grid-list cols="10" rowHeight="35px" style="width: 100%;">
         <mat-grid-tile [colspan]="10" [rowspan]="1">
             <span style="font-weight: 500; color: white; font-size: 20px;">
-                ANOTACIONES INCONSITENTES
+                {{ 'consolidar.dialogo.inconsistencia' | translate }}
             </span>
         </mat-grid-tile>
     </mat-grid-list>
@@ -14,7 +14,7 @@
         <mat-grid-list cols="10" rowHeight="35px" style="width: 100%;">
             <mat-grid-tile [colspan]="10" [rowspan]="1">
                 <span style="font-weight: 500; color: white; font-size: 20px;">
-                    ANOTACIONES CONSITENTES
+                    {{ 'consolidar.dialogo.consistencia' | translate }}
                 </span>
             </mat-grid-tile>
         </mat-grid-list>
@@ -60,15 +60,15 @@
         <hr>
 
         <mat-card-content>
-            <span style="font-weight: 500;">Anotacion:
+            <span style="font-weight: 500;">{{ 'consolidar.dialogo.anotacion' | translate }}
                 <span *ngIf="anotacion.ejecuta; else noEjecuta" style="color: green; font-weight: 600;">
-                    Ejecuta
+                    {{ 'consolidar.dialogo.ejecuta' | translate }}
                     <br>
                 </span>
         
                 <ng-template #noEjecuta>
                     <span style="color: red; font-weight: 600;">
-                        No ejecuta
+                        {{ 'consolidar.dialogo.no_ejecuta' | translate }}
                     </span>
                     <br>
                 </ng-template>
@@ -77,7 +77,7 @@
             {{anotacion.texto}}
             <br>
             <br>
-            <span style="font-weight: 500;">Comentario:</span>
+            <span style="font-weight: 500;">{{ 'consolidar.dialogo.comentario' | translate }}</span>
             <br>
             {{anotacion.comentario}}
             <br>
@@ -88,7 +88,7 @@
 
     <ng-template #noAnotaciones>
         <mat-card>
-            Esta sección no contiene anotaciones
+            {{ 'consolidar.dialogo.no_anotacion' | translate }}
         </mat-card>
     </ng-template>
     
